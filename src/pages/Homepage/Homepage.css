@@ -5,6 +5,16 @@
 .vh-91{
     height: 91vh;
 }
-.px48{
-    font-size: 48px;
+.rem3{
+    font-size: 3rem !important;
+    line-height: 1.25;
+}
+.px20 {
+    font-size: 20px;
+}
+.p-12px{
+    padding: 12px;
+}
+input:focus {
+    outline-width: 0;
 }

@@ -1,13 +1,16 @@
 import React from "react";
 import "./Navbar.css";
-// import "../../styles/style.css";
-import "~/styles/style.css"
+import "~/styles/style.css";
+import { useNavigate } from "react-router-dom";
+
 
 function Navbar() {
+  const navigate = useNavigate();
   return (
     <React.Fragment>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
-        <div class="container-fluid">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light p-0">
+            
+        <div className="container-fluid" >
           <svg
             aria-label="Atlassian Trello"
             height="37.5"
@@ -16,7 +19,7 @@ function Navbar() {
             width="111.42857142857143"
             xmlns="http://www.w3.org/2000/svg"
             xmlnslink="http://www.w3.org/1999/xlink"
-            class="Logo-sc-1anfgcw-0 gguOta"
+            className="Logo-sc-1anfgcw-0 gguOta "
           >
             <linearGradient
               id="trello-logo-gradient-defaultMJFtCCgVhXrVl7v9HA7EH"
@@ -25,8 +28,8 @@ function Navbar() {
               y1="100%"
               y2=".016%"
             >
-              <stop offset="0" stop-color="#0052cc"></stop>
-              <stop offset="1" stop-color="#2684ff"></stop>
+              <stop offset="0" stopColor="#0052cc"></stop>
+              <stop offset="1" stopColor="#2684ff"></stop>
             </linearGradient>
             <path
               d="m55.3 40.6h-47.5c-4.1 0-7.4 3.3-7.4 7.4v47.6c0 4.1 3.3 7.4 7.4 7.4h47.5c4.1 0 7.4-3.3 7.4-7.4v-47.6c0-4.1-3.3-7.4-7.4-7.4zm-28.1 44.9c0 1.4-1.1 2.5-2.5 2.5h-10.4c-1.4 0-2.5-1.1-2.5-2.5v-30.9c0-1.4 1.1-2.5 2.5-2.5h10.4c1.4 0 2.5 1.1 2.5 2.5zm24-14.2c0 1.4-1.1 2.5-2.4 2.5h-10.5c-1.4 0-2.5-1.1-2.5-2.5v-16.7c0-1.4 1.1-2.5 2.5-2.5h10.4c1.4 0 2.5 1.1 2.5 2.5z"
@@ -52,8 +55,9 @@ function Navbar() {
               <path d="m119.2 16.7c0-4-2.6-5.8-7.4-7-3-.8-3.7-1.4-3.7-2.4 0-1.2 1.1-1.8 3-1.8 2.4.1 4.8.7 7 1.8v-5c-2.2-1-4.5-1.5-6.9-1.5-5.3 0-8.2 2.5-8.2 6.6 0 3.9 2.6 5.9 7 6.9 3.1.7 4 1.2 4 2.5 0 1-.7 1.8-3 1.8-2.8-.1-5.6-.9-8.1-2.3v5.3c2.5 1.2 5.2 1.9 8 1.9 5.7 0 8.3-2.7 8.3-6.8z"></path>
             </g>
           </svg>
+          
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
@@ -61,38 +65,34 @@ function Navbar() {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="#features">
                   Features
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="#solutions">
                   Solutions
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
-                  plans
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="#pricing">
+                  Pricing
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
-                  plans
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="/">
+                  home
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
-                  plans
-                </a>
-              </li>
+            
             </ul>
             <div className="d-flex gap-2  ">
-              <button className="btn ">Log in</button>
+              <button className="btn" onClick={()=>{navigate('/auth',{state : {bydefaultTab : "Login"}})}}>Log in</button>
               <span className="text-light button-bgcolor px-3 align-items-center d-flex py-3">
                 Get Trello for free
               </span>
