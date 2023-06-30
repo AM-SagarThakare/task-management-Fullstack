@@ -1,0 +1,34 @@
+.bgcolor-homepage {
+  background-image: linear-gradient(60deg, rgb(82, 67, 170), rgb(237, 80, 180));
+}
+
+.rem-lg-3 {
+  font-size: 3rem;
+  line-height: 1.25;
+}
+.px20 {
+  font-size: 20px;
+}
+.p-12px {
+  padding: 12px;
+}
+input:focus {
+  outline-width: 0;
+}
+.fs-32{
+    font-size: 32px !important;
+}
+/*  sm-lg screen */
+@media only screen and (max-width: 992px) and (min-width: 576px) {
+  /* fs= font size */
+  .fs-sm-44 {
+    font-size: 44px !important;
+    line-height: 1.1;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .vh-lg-91 {
+    height: 91vh;
+  }
+}
