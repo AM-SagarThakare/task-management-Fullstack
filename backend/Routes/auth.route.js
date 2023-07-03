@@ -1,5 +1,11 @@
-const express = require('express');
+const express = require("express");
+const { authController } = require("../Controllers");
 const app = express();
-const port = 5000;
+const router = express.Router();
 
-app.get('/', (req, res) => res.send('Hello World!'));
+// register new user
+router.post("/registration", authController.registerUser);
+// login existing user
+// router.get("/login", authController.loginUser);
+
+module.exports = router;

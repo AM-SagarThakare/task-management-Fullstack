@@ -1,24 +1,22 @@
 const mongoose = require("mongoose");
-// console.log('in index before - app = require("./app");');
 const app = require("./app");
-// console.log('in index after - app = require("./app");');
 const dotenv = require("dotenv/config");
 var server;
 
 // connect nodejs to mongodb database
 mongoose
-  .connect(process.env.DB_CONNECTION)
+  .connect(
+    "mongodb+srv://sagarthakare:%40mongodb%40123@cluster0.ysrtc7j.mongodb.net/angular-minds"
+  )
   .then((res) => {
     console.log(
       "----------------------------------------------------------------"
     );
     console.log("mongodb connected successfully !!!");
-    server = app.listen(process.env.PORT_NO, () => {});
+    server = app.listen(5000, () => {});
 
     if (server) {
-      console.log(
-        `Server Started Successfully on port!!! ${process.env.PORT_NO}`
-      );
+      console.log(`Server Started Successfully on port!!! 5000`);
       console.log(
         "----------------------------------------------------------------"
       );
