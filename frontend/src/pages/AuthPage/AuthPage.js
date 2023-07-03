@@ -31,12 +31,11 @@ function AuthPage() {
 
   return (
     <React.Fragment>
-      {/* {setInitialTab()} */}
 
-      <div className="w-75 mx-auto mt-4">
+      <div className="w-75 mx-auto mt-4 w-lg-50">
         {/* <!-- Pills navs --> */}
         <ul
-          className="nav nav-pills nav-justified mb-3"
+          className="nav nav-pills nav-justified mb-3 border rounded"
           id="ex1"
           role="tablist"
         >
