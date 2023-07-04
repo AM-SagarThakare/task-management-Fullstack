@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { registerUser } from "../../services/ApiService";
 import "./AuthPage.css";
+import { registerUser } from "../../services/authService";
 
 function Register({ userEmail }) {
   const {
@@ -10,6 +10,8 @@ function Register({ userEmail }) {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
+    // console.log(data);
+
     registerUser(data);
   };
 
@@ -31,8 +33,10 @@ function Register({ userEmail }) {
               {...register("userName", { required: true })}
             />
 
-            <p role="alert" className={errors.userName?.type === "required" ? "fs-10px" : ""}>
-           
+            <p
+              role="alert"
+              className={errors.userName?.type === "required" ? "fs-10px" : ""}
+            >
               {errors.userName?.type === "required"
                 ? "username is required"
                 : "Username"}
@@ -47,8 +51,10 @@ function Register({ userEmail }) {
               className="form-control"
               {...register("email", { required: true })}
             />
-            <p role="alert" className={errors.email?.type === "required" ? "fs-10px" : ""}>
-            
+            <p
+              role="alert"
+              className={errors.email?.type === "required" ? "fs-10px" : ""}
+            >
               {errors.email?.type === "required"
                 ? "email is required"
                 : "Email"}
@@ -64,8 +70,10 @@ function Register({ userEmail }) {
               {...register("password", { required: true })}
             />
 
-            <p role="alert" className={errors.password?.type === "required" ? "fs-10px" : ""}>
-              
+            <p
+              role="alert"
+              className={errors.password?.type === "required" ? "fs-10px" : ""}
+            >
               {errors.password?.type === "required"
                 ? "password is required"
                 : "Password"}

@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { loginUser } from "../../services/authService";
 
 function Login() {
   const {
@@ -10,7 +11,7 @@ function Login() {
   const onSubmit = (data) => {
     console.log(data);
 
-    // registerUser(data);
+    loginUser(data)
   };
 
   return (
@@ -28,30 +29,43 @@ function Login() {
               type="email"
               id="loginName"
               className="form-control"
+              autoComplete="username"
               {...register("email", { required: true })}
             />
-             <p role="alert" className={errors.email?.type === "required" ? "fs-10px" : ""}>
-           
-           {errors.email?.type === "required"
-             ? "email is required"
-             : "email"}
-         </p>
+            <p
+              role="alert"
+              className={errors.email?.type === "required" ? "fs-10px" : ""}
+            >
+              {errors.email?.type === "required"
+                ? "Email is required"
+                : "E-mail"}
+            </p>
           </div>
 
           {/* <!-- Password input --> */}
           <div className="form-outline mb-4">
-            <input
+            {/* <input
               type="password"
               id="loginPassword"
               className="form-control"
+              name="password"
+              /> */}
+
+            <input
+              type="password"
+              id="loginPassword"
+              autoComplete="current-password"
+              className="form-control"
               {...register("password", { required: true })}
             />
-             <p role="alert" className={errors.password?.type === "required" ? "fs-10px" : ""}>
-           
-           {errors.password?.type === "required"
-             ? "password is required"
-             : "password"}
-         </p>
+            <p
+              role="alert"
+              className={errors.password?.type === "required" ? "fs-10px" : ""}
+            >
+              {errors.password?.type === "required"
+                ? "password is required"
+                : "password"}
+            </p>
           </div>
 
           {/* <!-- 2 column grid layout --> */}

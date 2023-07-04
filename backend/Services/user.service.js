@@ -1,5 +1,4 @@
 const { userCollection } = require("../Models");
-// const {  } = require("../Models");
 
 const isEmailPresent = async (req) => {
   return await userCollection.findOne({ email: req.body.email });

@@ -43,6 +43,42 @@ const registerUser = async (req, res) => {
   }
 };
 
+const loginUser =async (req, res) => {
+  const { error, value } = validate.validateJoiSchema(authValidation.login)(
+    req.body
+  );
+
+  if (error) {
+    return res.status(400).send(error.details[0]);
+  }
+
+  const userData = await userService.isEmailPresent(req);
+
+  if (userData) {
+    bcrypt.compare(req.body.password, userData.password, (err, data) => {
+      if (err) return res.send({ message : err.message});
+
+      if (data) {
+        jwt.sign(
+          { id: userData._id },
+          process.env.SECRETKEY,
+          { expiresIn: process.env.JWT_EXPIRES_IN },
+          (err, token) => {
+            userData.password = undefined;
+            userData.mobileNo = undefined;
+            if (token) res.json({ success: true, token, userData });
+            else return res.json({ message: err });
+          }
+        );
+      } else return res.send({ message: "Invalid Password" });
+    });
+  } else {
+    return res.send({ message: "User does not exist" });
+  }
+  
+};
+
 module.exports = {
   registerUser,
+  loginUser
 };
