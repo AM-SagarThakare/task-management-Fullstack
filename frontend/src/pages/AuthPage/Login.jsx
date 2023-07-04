@@ -1,6 +1,18 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 
-function Login({ userEmail }) {
+function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+
+    // registerUser(data);
+  };
+
   return (
     <React.Fragment>
       <div
@@ -9,19 +21,21 @@ function Login({ userEmail }) {
         role="tabpanel"
         aria-labelledby="tab-login"
       >
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           {/* <!-- Email input --> */}
           <div className="form-outline mb-4">
             <input
               type="email"
               id="loginName"
               className="form-control"
-              defaultValue={userEmail ? userEmail : " "}
-              // {}
+              {...register("email", { required: true })}
             />
-            <label className="form-label" htmlFor="loginName">
-              Email or username
-            </label>
+             <p role="alert" className={errors.email?.type === "required" ? "fs-10px" : ""}>
+           
+           {errors.email?.type === "required"
+             ? "email is required"
+             : "email"}
+         </p>
           </div>
 
           {/* <!-- Password input --> */}
@@ -30,10 +44,14 @@ function Login({ userEmail }) {
               type="password"
               id="loginPassword"
               className="form-control"
+              {...register("password", { required: true })}
             />
-            <label className="form-label" htmlFor="loginPassword">
-              Password
-            </label>
+             <p role="alert" className={errors.password?.type === "required" ? "fs-10px" : ""}>
+           
+           {errors.password?.type === "required"
+             ? "password is required"
+             : "password"}
+         </p>
           </div>
 
           {/* <!-- 2 column grid layout --> */}
@@ -67,11 +85,11 @@ function Login({ userEmail }) {
           </button>
 
           {/* <!-- Register buttons --> */}
-          <div className="text-center">
+          {/* <div className="text-center">
             <p>
               Not a member? <a href="#pills-register">Register</a>
             </p>
-          </div>
+          </div> */}
         </form>
       </div>
     </React.Fragment>

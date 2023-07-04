@@ -83,7 +83,7 @@ function AuthPage() {
         {/* <!-- Pills content --> */}
         <div className="tab-content ">
           {loginStatus ? (
-            <Login userEmail={data?.userEmail} />
+            <Login />
           ) : (
             <Register userEmail={data?.userEmail} />
           )}

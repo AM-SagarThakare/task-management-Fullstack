@@ -1,16 +1,17 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { registerUser } from "../../services/ApiService";
+import "./AuthPage.css";
 
-function Register({userEmail}) {
-
-  const { register, handleSubmit } = useForm();
+function Register({ userEmail }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const onSubmit = (data) => {
-    // console.log(data);
-
-    registerUser(data)
+    registerUser(data);
   };
-
 
   return (
     <React.Fragment>
@@ -21,28 +22,37 @@ function Register({userEmail}) {
         aria-labelledby="tab-register"
       >
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* <!-- Name input --> */}
-          {/* <div className="form-outline mb-4">
-            <input type="text" id="registerName" className="form-control" defaultValue={userEmail ? userEmail : " "}/>
-            <label className="form-label" htmlFor="registerName">
-              Name
-            </label>
-          </div> */}
-
           {/* <!-- Username input --> */}
           <div className="form-outline mb-4">
-            <input type="text" id="registerUsername" className="form-control" {...register('userName')}/>
-            <label className="form-label" htmlFor="registerUsername">
-              Username
-            </label>
+            <input
+              type="text"
+              id="registerUsername"
+              className="form-control"
+              {...register("userName", { required: true })}
+            />
+
+            <p role="alert" className={errors.userName?.type === "required" ? "fs-10px" : ""}>
+           
+              {errors.userName?.type === "required"
+                ? "username is required"
+                : "Username"}
+            </p>
           </div>
 
           {/* <!-- Email input --> */}
           <div className="form-outline mb-4">
-            <input type="email" id="registerEmail" className="form-control" {...register('email')}/>
-            <label className="form-label" htmlFor="registerEmail">
-              Email
-            </label>
+            <input
+              type="email"
+              id="registerEmail"
+              className="form-control"
+              {...register("email", { required: true })}
+            />
+            <p role="alert" className={errors.email?.type === "required" ? "fs-10px" : ""}>
+            
+              {errors.email?.type === "required"
+                ? "email is required"
+                : "Email"}
+            </p>
           </div>
 
           {/* <!-- Password input --> */}
@@ -51,11 +61,15 @@ function Register({userEmail}) {
               type="password"
               id="registerPassword"
               className="form-control"
-              {...register('password')}
+              {...register("password", { required: true })}
             />
-            <label className="form-label" htmlFor="registerPassword">
-              Password
-            </label>
+
+            <p role="alert" className={errors.password?.type === "required" ? "fs-10px" : ""}>
+              
+              {errors.password?.type === "required"
+                ? "password is required"
+                : "Password"}
+            </p>
           </div>
 
           {/* <!-- Repeat Password input --> */}
@@ -64,11 +78,18 @@ function Register({userEmail}) {
               type="password"
               id="registerRepeatPassword"
               className="form-control"
-              {...register('confirmPassword')}
+              {...register("confirmPassword", { required: true })}
             />
-            <label className="form-label" htmlFor="registerRepeatPassword" >
-              confirm password
-            </label>
+            <p
+              role="alert"
+              className={
+                errors.confirmPassword?.type === "required" ? "fs-10px" : ""
+              }
+            >
+              {errors.confirmPassword?.type === "required"
+                ? "confirm password is required"
+                : "confirm Password"}
+            </p>
           </div>
 
           {/* <!-- Checkbox --> */}

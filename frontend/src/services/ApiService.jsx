@@ -12,13 +12,6 @@ const baseURL = "http://localhost:5000";
 //   .catch((error) => console.log(error));
 
 const registerUser = async (user) => {
-  console.log(user);
-  //   await axios
-  //     // .post(baseURL + "/auth/registration", { user })
-  //     .post("/auth/registration", user)
-  //     .then((res) => console.log(res))
-  //     .catch((error) => console.log(error));
-
   service.post("/auth/registration", user);
 };
 export { registerUser };
