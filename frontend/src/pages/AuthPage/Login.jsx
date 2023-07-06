@@ -1,6 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { loginUser } from "../../services/authService";
+import { setToken } from "../../services/localStorageService";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const {
@@ -8,10 +11,15 @@ function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
 
-    loginUser(data)
+  const navigate = useNavigate();
+
+  const onSubmit = (formData) => {
+    loginUser(formData).then((response) => {
+      toast.success("login successful");
+      setToken("activeUserToken", response.data.token);
+      navigate("/user/board");
+    });
   };
 
   return (
@@ -44,26 +52,19 @@ function Login() {
 
           {/* <!-- Password input --> */}
           <div className="form-outline mb-4">
-            {/* <input
-              type="password"
-              id="loginPassword"
-              className="form-control"
-              name="password"
-              /> */}
-
             <input
               type="password"
               id="loginPassword"
               autoComplete="current-password"
               className="form-control"
-              {...register("password", { required: true })}
+              {...register("password", { required: true, minLength: 4 })}
             />
             <p
               role="alert"
               className={errors.password?.type === "required" ? "fs-10px" : ""}
             >
               {errors.password?.type === "required"
-                ? "password is required"
+                ? "Password must be at least 4 characters long"
                 : "password"}
             </p>
           </div>

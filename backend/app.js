@@ -10,6 +10,8 @@ const routes = require('./Routes')
 app.use(bodyParser.json())
 app.use(cors())
 
+app.get('/',(req,res)=>{res.send('sagar')})
+
 // routes
 app.use('/', routes )   //  routes
 

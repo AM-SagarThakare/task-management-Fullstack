@@ -10,18 +10,17 @@ const service = axios.create({
 
 // middleware for sending request
 service.interceptors.request.use((req) => {
-  console.log(req.url);
 
-  if (req.url.includes("auth")) {
+  if (req.url.includes("user")) { 
     req.headers["Authorization"] = `Bearer ${getToken("activeUserToken")}`;
   }
+
   return req;
 });
 
 // middleware for getting response
 service.interceptors.response.use(
   (res) => {
-    console.log(res);
     return res;
   },
   (err) => {

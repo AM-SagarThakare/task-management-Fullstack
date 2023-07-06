@@ -1,5 +1,8 @@
-const getToken = () => {
-  return localStorage.getItem("activeUserToken");
+const getToken = (key) => {
+  return localStorage.getItem(key);
 };
 
-export { getToken };
+const setToken = (key,token) => {
+  return localStorage.setItem(key,token);
+}
+export { getToken , setToken};

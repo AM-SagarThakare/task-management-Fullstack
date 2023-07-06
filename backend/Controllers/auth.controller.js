@@ -6,6 +6,7 @@ const { validate } = require("../Middlewares");
 const { authValidation } = require("../Validations");
 const { userService } = require("../Services");
 const { userCollection } = require("../Models");
+const jwt = require("jsonwebtoken")
 
 const registerUser = async (req, res) => {
   const { error, value } = validate.validateJoiSchema(authValidation.register)(
