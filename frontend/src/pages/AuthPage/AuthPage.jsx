@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import Login from "./Login";
-import Register from "./Register";
+import Login from "../../components/AuthComponent/Login";
+import Register from "../../components/AuthComponent/Register";
 
 function AuthPage() {
   const [loginStatus, setLoginStatus] = useState("");

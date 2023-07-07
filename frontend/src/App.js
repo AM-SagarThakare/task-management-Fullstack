@@ -1,18 +1,20 @@
 import "./App.css";
-import Navbar from "./components/navbar/Navbar";
-import React from "react";
+import "react-toastify/dist/ReactToastify.css";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import { Navbar, SideBar } from "./components";
+
+import React from "react";
 import Homepage from "./pages/Homepage/Homepage";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import { ToastContainer, Zoom } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoute from "./utils/ProtectedRoute";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import Board from "./components/SlideBar/SlideBarPages/Board";
-import Members from "./components/SlideBar/SlideBarPages/Members";
-import Setting from "./components/SlideBar/SlideBarPages/Setting";
-import SideBar from "./components/SlideBar/SideBar";
-import Error from "./components/Error";
+import Board from "./components/SideBarMenu/Board";
+import Members from "./components/SideBarMenu/Members";
+import Setting from "./components/SideBarMenu/Setting";
+import Error from "./components/Error/Error";
+import CheckToken from "./components/CheckToken";
 
 function App() {
   return (
@@ -22,8 +24,10 @@ function App() {
         <Navbar />
 
         <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/" element={<CheckToken />}>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/auth" element={<AuthPage />} />
+          </Route>
 
           <Route path="/user" element={<ProtectedRoute />}>
             <Route path="" element={<SideBar />}>
@@ -33,7 +37,6 @@ function App() {
               <Route path="*" element={<Error />} />
             </Route>
           </Route>
-          
         </Routes>
 
         {/* <Routes>

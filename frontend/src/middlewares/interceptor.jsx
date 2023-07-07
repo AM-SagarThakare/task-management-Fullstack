@@ -1,8 +1,7 @@
-
 import axios from "axios";
 import { getToken } from "../services/localStorageService";
 
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const service = axios.create({
   baseURL: "http://localhost:5000",
@@ -10,8 +9,7 @@ const service = axios.create({
 
 // middleware for sending request
 service.interceptors.request.use((req) => {
-
-  if (req.url.includes("user")) { 
+  if (req.url.includes("user")) {
     req.headers["Authorization"] = `Bearer ${getToken("activeUserToken")}`;
   }
 
@@ -21,11 +19,13 @@ service.interceptors.request.use((req) => {
 // middleware for getting response
 service.interceptors.response.use(
   (res) => {
+    console.log("interceptor res", res);
     return res;
   },
-  (err) => {
-    console.log(err.response.data.message);
-    toast.error(err.response.data.message)
+  function (err) {
+    console.log("interceptor res", err);
+    toast.error(err?.response?.data?.message);
+    return Promise.reject(err);
   }
 );
 

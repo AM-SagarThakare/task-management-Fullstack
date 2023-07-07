@@ -6,7 +6,7 @@ const { validate } = require("../Middlewares");
 const { authValidation } = require("../Validations");
 const { userService } = require("../Services");
 const { userCollection } = require("../Models");
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
   const { error, value } = validate.validateJoiSchema(authValidation.register)(
@@ -44,7 +44,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-const loginUser =async (req, res) => {
+const loginUser = async (req, res) => {
   const { error, value } = validate.validateJoiSchema(authValidation.login)(
     req.body
   );
@@ -54,10 +54,10 @@ const loginUser =async (req, res) => {
   }
 
   const userData = await userService.isEmailPresent(req);
-
+console.log("userData",userData)
   if (userData) {
     bcrypt.compare(req.body.password, userData.password, (err, data) => {
-      if (err) return res.send({ message : err.message});
+      if (err) return res.status(400).send({ message: err.message });
 
       if (data) {
         jwt.sign(
@@ -71,15 +71,14 @@ const loginUser =async (req, res) => {
             else return res.json({ message: err });
           }
         );
-      } else return res.send({ message: "Invalid Password" });
+      } else return res.status(400).send({ message: "Invalid Password" });
     });
   } else {
-    return res.send({ message: "User does not exist" });
+    return res.status(400).send({ message: "User does not exist" });
   }
-  
 };
 
 module.exports = {
   registerUser,
-  loginUser
+  loginUser,
 };
