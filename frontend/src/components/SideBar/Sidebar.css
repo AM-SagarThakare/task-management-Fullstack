@@ -1,0 +1,11 @@
+.sidebar-border{
+    background-color: red !important;
+    border-radius: rgb(157, 255, 0) !important;
+}
+
+.hoverEffect:hover{
+    background: rgb(48, 47, 47);
+}
+/* .activeMenu{
+    background-color: aqua;
+} */

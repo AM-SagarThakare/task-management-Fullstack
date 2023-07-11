@@ -15,10 +15,11 @@ import Members from "./components/SideBarMenu/Members";
 import Setting from "./components/SideBarMenu/Setting";
 import Error from "./components/Error/Error";
 import CheckToken from "./components/CheckToken";
+import '~/styles/style.css'
 
 function App() {
   return (
-    <div style={{ fontFamily: "Charlie Display, sans-serif" }}>
+    <div style={{ fontFamily: "Charlie Display, sans-serif" }} className="bg-dark primary-color">
       <ToastContainer position="top-center" transition={Zoom} />
       <BrowserRouter>
         <Navbar />

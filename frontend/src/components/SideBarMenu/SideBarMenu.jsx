@@ -1,8 +1,15 @@
 import React from 'react'
 
 function SideBarMenu() {
+
+  const board = ()=>{
+    
+  }
+
   return (
-    <div>SideBarMenu</div>
+    <div>
+
+    </div>
   )
 }
 

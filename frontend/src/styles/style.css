@@ -1,7 +1,23 @@
 /* write global css here */
 
 .button-bgcolor {
-  background-color: rgb(0, 101, 255) !important;
+  background-color: #579dff !important;
+}
+.primary-color {
+  color: #9fadbc !important;
+}
+.sidebar-menu-bg {
+  background-color: #5c5c5d;
+}
+.error{
+  color: red !important;
+}
+.fs-14px {
+  font-size: 14px;
+}
+
+.modal-content {
+  background-color: rgb(35, 35, 35);
 }
 
 @font-face {
@@ -10,29 +26,26 @@
   /* You can add more font formats and variations if available */
 }
 
-
-
 /* sm-lg screen*/
 @media only screen and (max-width: 992px) {
   .w-sm-100 {
     width: 100% !important;
   }
-
 }
 
 /* mobile screen */
 @media only screen and (max-width: 576px) {
-  .width-100{
+  .width-100 {
     width: 100% !important;
   }
 }
 
 /* large screen */
 @media only screen and (min-width: 992px) {
-  .w-lg-100{
+  .w-lg-100 {
     width: 100% !important;
   }
-  .w-lg-50{
-    width: 50%!important;
+  .w-lg-50 {
+    width: 50% !important;
   }
 }

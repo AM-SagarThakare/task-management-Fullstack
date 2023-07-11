@@ -2,15 +2,14 @@ import React from "react";
 import "./Navbar.css";
 import "~/styles/style.css";
 import { useNavigate } from "react-router-dom";
-
+import { setToken } from "../../services/localStorageService";
 
 function Navbar() {
   const navigate = useNavigate();
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-light bg-light p-lg-0 ">
-            
-        <div className="container-fluid" >
+        <div className="container-fluid">
           <svg
             aria-label="Atlassian Trello"
             height="37.5"
@@ -55,7 +54,7 @@ function Navbar() {
               <path d="m119.2 16.7c0-4-2.6-5.8-7.4-7-3-.8-3.7-1.4-3.7-2.4 0-1.2 1.1-1.8 3-1.8 2.4.1 4.8.7 7 1.8v-5c-2.2-1-4.5-1.5-6.9-1.5-5.3 0-8.2 2.5-8.2 6.6 0 3.9 2.6 5.9 7 6.9 3.1.7 4 1.2 4 2.5 0 1-.7 1.8-3 1.8-2.8-.1-5.6-.9-8.1-2.3v5.3c2.5 1.2 5.2 1.9 8 1.9 5.7 0 8.3-2.7 8.3-6.8z"></path>
             </g>
           </svg>
-          
+
           <button
             className="navbar-toggler"
             type="button"
@@ -70,17 +69,29 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#features">
+                <a
+                  className="nav-link active"
+                  aria-current="page"
+                  href="#features"
+                >
                   Features
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#solutions">
+                <a
+                  className="nav-link active"
+                  aria-current="page"
+                  href="#solutions"
+                >
                   Solutions
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#pricing">
+                <a
+                  className="nav-link active"
+                  aria-current="page"
+                  href="#pricing"
+                >
                   Pricing
                 </a>
               </li>
@@ -89,10 +100,23 @@ function Navbar() {
                   home
                 </a>
               </li>
-            
             </ul>
             <div className="d-flex gap-2  ">
-              <button className="btn" onClick={()=>{navigate('/auth',{state : {bydefaultTab : "Login"}})}}>Log in</button>
+              <button
+                className="btn"
+                onClick={() => {
+                  if(localStorage.getItem("activeUserToken")==null){
+                    navigate("/auth", { state: { bydefaultTab: "Login" } });
+                  }else {
+                    setToken('activeUserToken',undefined)
+                    navigate("/");
+                  }
+                }}
+              >
+                {localStorage.getItem("activeUserToken") == null
+                  ? "login"
+                  : "logout"}
+              </button>
               <span className="text-light button-bgcolor px-3 align-items-center d-flex py-3">
                 Get Trello for free
               </span>
