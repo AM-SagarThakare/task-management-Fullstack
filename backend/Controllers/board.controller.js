@@ -14,7 +14,7 @@ const addNewBoard = async (req, res) => {
 
   const newBoard = new boardCollection({
     ...value,
-    BoardOwnerID : req.user_id
+    boardOwnerID: req.user_id,
   });
 
   newBoard
@@ -27,12 +27,11 @@ const addNewBoard = async (req, res) => {
     .catch((error) => console.log(error));
 };
 
-const getAllBoards = async (req,res)=>{
-    
-   return boardService.getAllBoards(req.user_id)
-}
+const getAllBoards = async (req, res) => {
+  return res.status(200).send(await boardService.getAllBoards(req.user_id));
+};
 
 module.exports = {
   addNewBoard,
-  getAllBoards
+  getAllBoards,
 };

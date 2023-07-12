@@ -3,6 +3,7 @@ import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { addNewBoard } from "../../services/boardService";
+import { toast } from "react-toastify";
 
 function CreateBoardModal({ boardStatus, setBoardStatus }) {
   const handleClose = () => {
@@ -19,7 +20,7 @@ function CreateBoardModal({ boardStatus, setBoardStatus }) {
     console.log(formdata);
     if (Object.keys(errors).length === 0) {
       addNewBoard(formdata)
-        .then((res) => console.log(res))
+        .then((res) => toast.success(res.data.message))
         .catch((err) => console.log(err));  
       setBoardStatus(!boardStatus);
     }

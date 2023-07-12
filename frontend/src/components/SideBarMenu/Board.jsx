@@ -4,10 +4,20 @@ import boardImg from "~/images/board-init-img.svg";
 import "~/styles/style.css";
 import CreateBoardModal from "../modals/CreatBoardModal";
 import { Button } from "react-bootstrap";
-
+import { useEffect } from "react";
+import { getAllBoards } from "../../services";
 
 export default function Board() {
   const [boardStatus, setBoardStatus] = useState(false);
+  const [boardArr, setBoardArr] = useState([]);
+
+  useEffect(() => {
+    getAllBoards()
+      .then((res) => {
+        setBoardArr(res.data);
+      })
+      .catch(() => {});
+  }, []);
 
   const initPageOfBoard = () => {
     return (
@@ -30,8 +40,9 @@ export default function Board() {
 
   return (
     <React.Fragment>
-      <h2 className="p-4"> Workspace</h2>
-      {initPageOfBoard()}
+      <h2 className="p-4 border-bottom"> Workspace</h2>
+
+      {boardArr.length === 0 ? initPageOfBoard() : <h1>boards present</h1>}
       <CreateBoardModal
         boardStatus={boardStatus}
         setBoardStatus={setBoardStatus}
