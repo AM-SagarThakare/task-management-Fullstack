@@ -1,6 +1,9 @@
 import React from "react";
+
 import { Button, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { addNewBoard } from "../../services/boardService";
+
 function CreateBoardModal({ boardStatus, setBoardStatus }) {
   const handleClose = () => {
     setBoardStatus(!boardStatus);
@@ -15,9 +18,11 @@ function CreateBoardModal({ boardStatus, setBoardStatus }) {
   const submit = (formdata) => {
     console.log(formdata);
     if (Object.keys(errors).length === 0) {
+      addNewBoard(formdata)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));  
       setBoardStatus(!boardStatus);
     }
-    // reset({ boardTitle: "" });
   };
 
   return (
@@ -50,7 +55,7 @@ function CreateBoardModal({ boardStatus, setBoardStatus }) {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" type="submit" >
+            <Button variant="primary" type="submit">
               Create Board
             </Button>
           </Modal.Footer>

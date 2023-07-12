@@ -19,7 +19,7 @@ service.interceptors.request.use((req) => {
 // middleware for getting response
 service.interceptors.response.use(
   (res) => {
-    console.log("interceptor res", res);
+    // console.log("interceptor res", res);
     return res;
   },
   function (err) {
