@@ -1,13 +1,15 @@
-import React from "react";
-import { useState } from "react";
-import boardImg from "~/images/board-init-img.svg";
+//css
 import "~/styles/style.css";
-import CreateBoardModal from "../modals/CreatBoardModal";
+//dependencies
+import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
-import { useEffect } from "react";
-import { getAllBoards } from "../../services";
+// react-icons
 import { AiFillProject } from "react-icons/ai";
-import UseGenerateRandomColor from "../../utils/useGenerateRandomColor";
+// images
+import boardImg from "~/images/board-init-img.svg";
+// folders
+import { CreateBoardModal } from "../";
+import { getAllBoards } from "~/services";
 
 export default function Board() {
   const [boardStatus, setBoardStatus] = useState(false);
@@ -44,7 +46,7 @@ export default function Board() {
   };
 
   const loadAllBoards = () => {
-    return boardArr.map((board,ind) => {
+    return boardArr.map((board, ind) => {
       return (
         <div
           className="col-2 mb-3 p-2 rounded opacity-decrease"

@@ -1,13 +1,15 @@
-import React from "react";
+// css
+import "./Sidebar.css";
+//dependencies
+import React, { useState } from "react";
+import { NavLink, Outlet } from "react-router-dom";
+
+//react-icons
 import { AiOutlineSetting } from "react-icons/ai";
 import { IoIosPeople } from "react-icons/io";
 import { BiBarChartAlt2 } from "react-icons/bi";
-import { NavLink, Outlet } from "react-router-dom";
-import { useState } from "react";
-import "./Sidebar.css";
 
 function SideBar() {
-  console.log("in sidebar");
   const [activeMenu, setActiveMenu] = useState("");
 
   const menuItems = [
@@ -32,7 +34,6 @@ function SideBar() {
     setActiveMenu(path);
   };
 
-
   return (
     <React.Fragment>
       <div className="d-flex">
@@ -55,11 +56,6 @@ function SideBar() {
               </NavLink>
             );
           })}
-
-          {/* <button className="border" onClick={toggleSlideBar}>
-            {" "}
-            close
-          </button> */}
         </div>
         <div className="w-100 ">
           <Outlet />

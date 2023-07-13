@@ -4,7 +4,11 @@ import { Navigate, Outlet } from "react-router-dom";
 
 function CheckToken() {
   console.log(getToken("activeUserToken"));
-  return getToken("activeUserToken") == null ? <Outlet /> : <Navigate to="/user/board" />;
+  return getToken("activeUserToken") == null ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/user/board" />
+  );
 }
 
 export default CheckToken;
