@@ -8,9 +8,12 @@ import { NavLink, Outlet } from "react-router-dom";
 import { AiOutlineSetting } from "react-icons/ai";
 import { IoIosPeople } from "react-icons/io";
 import { BiBarChartAlt2 } from "react-icons/bi";
+import { FiChevronsRight, FiChevronsLeft } from "react-icons/fi";
 
 function SideBar() {
   const [activeMenu, setActiveMenu] = useState("");
+  const [isOpen, setIsOpen] = useState();
+  const toggleSlideBar = () => setIsOpen(!isOpen);
 
   const menuItems = [
     {
@@ -36,11 +39,13 @@ function SideBar() {
 
   return (
     <React.Fragment>
-      <div className="d-flex">
+      
+      <div className="d-flex ">
         <div
-          className="vh-100 bg-dark overflow-hidden border-end"
-          style={{ width: "280px" }}
+          className="vh-100 bg-dark overflow-hidden border-end "
+          style={{ width: isOpen ? "300px" : "48px" }}
         >
+          
           {menuItems.map((item, i) => {
             return (
               <NavLink
@@ -57,7 +62,14 @@ function SideBar() {
             );
           })}
         </div>
-        <div className="w-100 ">
+        <div className="w-100 position-relative">
+        <div className="border position-absolute rounded-circle bg-dark " style={{left : '-20px'}}>
+          {isOpen ? (
+            <FiChevronsLeft size={30} onClick={toggleSlideBar} />
+          ) : (
+            <FiChevronsRight size={30} onClick={toggleSlideBar} />
+          )}
+        </div>
           <Outlet />
         </div>
       </div>

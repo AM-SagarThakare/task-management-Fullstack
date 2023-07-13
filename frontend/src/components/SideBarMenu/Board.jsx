@@ -14,7 +14,7 @@ import { getAllBoards } from "~/services";
 export default function Board() {
   const [boardStatus, setBoardStatus] = useState(false);
   const [boardArr, setBoardArr] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // restrict
+  const [isLoading, setIsLoading] = useState(true); // 
 
   useEffect(() => {
     getAllBoards()
@@ -48,12 +48,14 @@ export default function Board() {
   const loadAllBoards = () => {
     return boardArr.map((board, ind) => {
       return (
-        <div
-          className="col-2 mb-3 p-2 rounded opacity-decrease"
-          style={{ height: "100px", backgroundColor: `#034d82` }}
-          key={ind}
-        >
-          {board.boardTitle}
+        <div className="col-6 col-sm-4 col-lg-2 mb-2 " key={ind}>
+          <div
+            style={{ height: "100px", backgroundColor: `#034d82` }}
+            
+            className="rounded p-2 opacity-decrease"
+          >
+            {board.boardTitle}
+          </div>
         </div>
       );
     });
@@ -70,15 +72,16 @@ export default function Board() {
             </h4>
           </div>
           <div className="container ">
-            <div className="row gap-2">
+            <div className="row row-wrap">
               {loadAllBoards()}
-              <div
-                className="col-2 mb-3 p-2 rounded sidebar-menu-bg "
-                role="button"
-                style={{ height: "100px" }}
-                onClick={() => setBoardStatus(!boardStatus)}
-              >
-                + Create New Board
+
+              <div className="col-sm-4 col-lg-2 col-6 mb-2 ">
+                <div
+                  style={{ height: "100px", backgroundColor: `#5c5c5c` }}
+                  className="rounded p-2 "
+                >
+                  + create new board
+                </div>
               </div>
             </div>
           </div>
