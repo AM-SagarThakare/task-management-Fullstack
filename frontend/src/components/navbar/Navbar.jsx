@@ -2,7 +2,7 @@ import React from "react";
 import "./Navbar.css";
 import "~/styles/style.css";
 import { useNavigate } from "react-router-dom";
-import { setToken } from "../../services/localStorageService";
+import { deleteToken, getToken } from "../../services";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -105,15 +105,15 @@ function Navbar() {
               <button
                 className="btn"
                 onClick={() => {
-                  if(localStorage.getItem("activeUserToken")==null){
+                  if(getToken("activeUserToken")==null){
                     navigate("/auth", { state: { bydefaultTab: "Login" } });
                   }else {
-                    setToken('activeUserToken',undefined)
+                    deleteToken()
                     navigate("/");
                   }
                 }}
               >
-                {localStorage.getItem("activeUserToken") == null
+                {getToken("activeUserToken") == null
                   ? "login"
                   : "logout"}
               </button>

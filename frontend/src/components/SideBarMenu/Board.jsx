@@ -10,13 +10,16 @@ import { getAllBoards } from "../../services";
 export default function Board() {
   const [boardStatus, setBoardStatus] = useState(false);
   const [boardArr, setBoardArr] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // restrict
 
   useEffect(() => {
     getAllBoards()
       .then((res) => {
         setBoardArr(res.data);
+        console.log(res.data);
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setIsLoading(false));
   }, []);
 
   const initPageOfBoard = () => {
@@ -38,11 +41,25 @@ export default function Board() {
     );
   };
 
+  const boardsAvailable = () => {
+    return (
+      <React.Fragment>
+        <h1>boards present</h1>
+      </React.Fragment>
+    );
+  };
+
   return (
     <React.Fragment>
       <h2 className="p-4 border-bottom"> Workspace</h2>
 
-      {boardArr.length === 0 ? initPageOfBoard() : <h1>boards present</h1>}
+    {/* before loading the proper Function dont show anything */}
+      {isLoading
+        ? null
+        : boardArr.length === 0
+        ? initPageOfBoard()
+        : boardsAvailable()}
+
       <CreateBoardModal
         boardStatus={boardStatus}
         setBoardStatus={setBoardStatus}
