@@ -9,13 +9,17 @@
 .sidebar-menu-bg {
   background-color: #5c5c5d;
 }
-.error{
+.error {
   color: red !important;
 }
 .fs-14px {
   font-size: 14px;
 }
-
+.opacity-decrease:hover {
+  background-color: rgba(30, 114, 210, 0.9) !important;
+  /* border: 0.5px solid white; */
+  color: rgb(30, 30, 30);
+}
 .modal-content {
   background-color: rgb(35, 35, 35);
 }

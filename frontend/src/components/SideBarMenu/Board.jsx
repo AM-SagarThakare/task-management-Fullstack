@@ -6,6 +6,8 @@ import CreateBoardModal from "../modals/CreatBoardModal";
 import { Button } from "react-bootstrap";
 import { useEffect } from "react";
 import { getAllBoards } from "../../services";
+import { AiFillProject } from "react-icons/ai";
+import UseGenerateRandomColor from "../../utils/useGenerateRandomColor";
 
 export default function Board() {
   const [boardStatus, setBoardStatus] = useState(false);
@@ -41,10 +43,44 @@ export default function Board() {
     );
   };
 
+  const loadAllBoards = () => {
+    return boardArr.map((board,ind) => {
+      return (
+        <div
+          className="col-2 mb-3 p-2 rounded opacity-decrease"
+          style={{ height: "100px", backgroundColor: `#034d82` }}
+          key={ind}
+        >
+          {board.boardTitle}
+        </div>
+      );
+    });
+  };
+
   const boardsAvailable = () => {
     return (
       <React.Fragment>
-        <h1>boards present</h1>
+        <div className="p-3 ">
+          <div className="d-flex py-3 gap-2 ">
+            <AiFillProject size={30} />
+            <h4>
+              <u>Your Boards</u>
+            </h4>
+          </div>
+          <div className="container ">
+            <div className="row gap-2">
+              {loadAllBoards()}
+              <div
+                className="col-2 mb-3 p-2 rounded sidebar-menu-bg "
+                role="button"
+                style={{ height: "100px" }}
+                onClick={() => setBoardStatus(!boardStatus)}
+              >
+                + Create New Board
+              </div>
+            </div>
+          </div>
+        </div>
       </React.Fragment>
     );
   };
@@ -53,7 +89,7 @@ export default function Board() {
     <React.Fragment>
       <h2 className="p-4 border-bottom"> Workspace</h2>
 
-    {/* before loading the proper Function dont show anything */}
+      {/* before loading the proper Function dont show anything */}
       {isLoading
         ? null
         : boardArr.length === 0
