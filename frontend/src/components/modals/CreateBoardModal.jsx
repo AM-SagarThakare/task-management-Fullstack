@@ -30,15 +30,15 @@ function CreateBoardModal({ boardStatus, setBoardStatus }) {
     <React.Fragment>
       <Modal show={boardStatus} onHide={handleClose} className="primary-color ">
         <Modal.Header closeButton>
-          <Modal.Title>Create New Board</Modal.Title>
+          <Modal.Title><h5>Create New Board</h5></Modal.Title>
         </Modal.Header>
         <form onSubmit={handleSubmit(submit)}>
           <Modal.Body className="px-4">
             <div className="d-flex flex-column ">
               <label>
-                <b>
+                <h6>
                   Board Title <span className="text-danger">*</span>
-                </b>
+                </h6>
               </label>
               <input
                 className="p-2 bg-dark border-0 primary-color "
@@ -53,10 +53,10 @@ function CreateBoardModal({ boardStatus, setBoardStatus }) {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button variant="secondary" onClick={handleClose} className="btn-sm">
               Close
             </Button>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" className="btn-sm">
               Create Board
             </Button>
           </Modal.Footer>

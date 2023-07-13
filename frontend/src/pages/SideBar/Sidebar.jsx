@@ -39,13 +39,11 @@ function SideBar() {
 
   return (
     <React.Fragment>
-      
       <div className="d-flex ">
         <div
           className="vh-100 bg-dark overflow-hidden border-end "
           style={{ width: isOpen ? "300px" : "48px" }}
         >
-          
           {menuItems.map((item, i) => {
             return (
               <NavLink
@@ -63,13 +61,16 @@ function SideBar() {
           })}
         </div>
         <div className="w-100 position-relative">
-        <div className="border position-absolute rounded-circle bg-dark " style={{left : '-20px'}}>
-          {isOpen ? (
-            <FiChevronsLeft size={30} onClick={toggleSlideBar} />
-          ) : (
-            <FiChevronsRight size={30} onClick={toggleSlideBar} />
-          )}
-        </div>
+          <div
+            className="border position-absolute rounded-circle bg-dark "
+            style={{ left: "-20px" , top : '3px'}}
+          >
+            {isOpen ? (
+              <FiChevronsLeft size={30} onClick={toggleSlideBar} />
+            ) : (
+              <FiChevronsRight size={30} onClick={toggleSlideBar} />
+            )}
+          </div>
           <Outlet />
         </div>
       </div>

@@ -52,7 +52,7 @@ export default function Board() {
           <div
             style={{ height: "100px", backgroundColor: `#034d82` }}
             
-            className="rounded p-2 opacity-decrease"
+            className="rounded p-2 opacity-decrease pointer"
           >
             {board.boardTitle}
           </div>
@@ -75,10 +75,11 @@ export default function Board() {
             <div className="row row-wrap">
               {loadAllBoards()}
 
-              <div className="col-sm-4 col-lg-2 col-6 mb-2 ">
+              <div className="col-sm-4 col-lg-2 col-6 mb-2 pointer">
                 <div
                   style={{ height: "100px", backgroundColor: `#5c5c5c` }}
                   className="rounded p-2 "
+                  onClick={() => setBoardStatus(!boardStatus)}
                 >
                   + create new board
                 </div>
