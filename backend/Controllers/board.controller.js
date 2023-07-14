@@ -31,7 +31,12 @@ const getAllBoards = async (req, res) => {
   return res.status(200).send(await boardService.getAllBoards(req.user_id));
 };
 
+const getBoardDetailsByID =async (req,res)=>{
+  return res.status(200).send(await boardService.getBoardDetailsByID(req.params.boardID))
+}
+
 module.exports = {
   addNewBoard,
   getAllBoards,
+  getBoardDetailsByID
 };

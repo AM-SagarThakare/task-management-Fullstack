@@ -7,6 +7,12 @@ const addNewBoardSchema = mongoose.Schema(
       ref: "user",
     },
     boardTitle: String,
+    list: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "list",
+      },
+    ],
   },
   { timestamp: true }
 );

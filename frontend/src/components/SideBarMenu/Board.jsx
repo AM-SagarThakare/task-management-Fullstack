@@ -10,17 +10,18 @@ import boardImg from "~/images/board-init-img.svg";
 // folders
 import { CreateBoardModal } from "../";
 import { getAllBoards } from "~/services";
+import { useNavigate } from "react-router-dom";
 
 export default function Board() {
+  const navigate = useNavigate();
   const [boardStatus, setBoardStatus] = useState(false);
   const [boardArr, setBoardArr] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // 
+  const [isLoading, setIsLoading] = useState(true); //
 
   useEffect(() => {
     getAllBoards()
       .then((res) => {
         setBoardArr(res.data);
-        console.log(res.data);
       })
       .catch(() => {})
       .finally(() => setIsLoading(false));
@@ -46,13 +47,20 @@ export default function Board() {
   };
 
   const loadAllBoards = () => {
+    const openBoardDetails = (index) => {
+      console.log(boardArr[index]);
+      navigate(`/user/board/${boardArr[index].boardTitle}`, {
+        state: { boardID: boardArr[index]._id },
+      });
+    };
+
     return boardArr.map((board, ind) => {
       return (
         <div className="col-6 col-sm-4 col-lg-2 mb-2 " key={ind}>
           <div
             style={{ height: "100px", backgroundColor: `#034d82` }}
-            
             className="rounded p-2 opacity-decrease pointer"
+            onClick={() => openBoardDetails(ind)}
           >
             {board.boardTitle}
           </div>
