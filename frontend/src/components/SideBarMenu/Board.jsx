@@ -13,19 +13,22 @@ import { getAllBoards } from "~/services";
 import { useNavigate } from "react-router-dom";
 
 export default function Board() {
+  console.log('in board ');
+
   const navigate = useNavigate();
   const [boardStatus, setBoardStatus] = useState(false);
   const [boardArr, setBoardArr] = useState([]);
   const [isLoading, setIsLoading] = useState(true); //
 
-  useEffect(() => {
+  useEffect( () => {
     getAllBoards()
       .then((res) => {
         setBoardArr(res.data);
+        console.log(res);
       })
       .catch(() => {})
-      .finally(() => setIsLoading(false));
-  }, []);
+      .finally(() => setIsLoading(!isLoading));
+  }, [boardStatus]);
 
   const initPageOfBoard = () => {
     return (
@@ -48,7 +51,6 @@ export default function Board() {
 
   const loadAllBoards = () => {
     const openBoardDetails = (index) => {
-      console.log(boardArr[index]);
       navigate(`/user/board/${boardArr[index].boardTitle}`, {
         state: { boardID: boardArr[index]._id },
       });

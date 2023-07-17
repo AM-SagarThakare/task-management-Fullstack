@@ -21,16 +21,18 @@ function CreateBoardModal({ boardStatus, setBoardStatus }) {
     if (Object.keys(errors).length === 0) {
       addNewBoard(formdata)
         .then((res) => toast.success(res.data.message))
-        .catch((err) => console.log(err));  
+        .catch(() => {});
       setBoardStatus(!boardStatus);
     }
   };
 
   return (
     <React.Fragment>
-      <Modal show={boardStatus} onHide={handleClose} className="primary-color ">
+      <Modal show={boardStatus} onHide={handleClose} className="primary-color">
         <Modal.Header closeButton>
-          <Modal.Title><h5>Create New Board</h5></Modal.Title>
+          <Modal.Title>
+            <h5>Create New Board</h5>
+          </Modal.Title>
         </Modal.Header>
         <form onSubmit={handleSubmit(submit)}>
           <Modal.Body className="px-4">
@@ -53,7 +55,11 @@ function CreateBoardModal({ boardStatus, setBoardStatus }) {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose} className="btn-sm">
+            <Button
+              variant="secondary"
+              onClick={handleClose}
+              className="btn-sm"
+            >
               Close
             </Button>
             <Button variant="primary" type="submit" className="btn-sm">

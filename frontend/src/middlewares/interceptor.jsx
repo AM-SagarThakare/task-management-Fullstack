@@ -9,6 +9,7 @@ const service = axios.create({
 
 // middleware for sending request
 service.interceptors.request.use((req) => {
+  console.log('in request');
   if (req.url.includes("user")) {
     req.headers["Authorization"] = `Bearer ${getToken("activeUserToken")}`;
   }

@@ -54,7 +54,7 @@ const loginUser = async (req, res) => {
   }
 
   const userData = await userService.isEmailPresent(req);
-console.log("userData",userData)
+// console.log("userData",userData)
   if (userData) {
     bcrypt.compare(req.body.password, userData.password, (err, data) => {
       if (err) return res.status(400).send({ message: err.message });

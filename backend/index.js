@@ -10,7 +10,7 @@ mongoose
   )
   .then((res) => {
     console.log(
-      "----------------------------------------------------------------"
+      "--------------------------------------------------------------"
     );
     console.log("mongodb connected successfully !!!");
     server = app.listen(5000, () => {});
@@ -18,7 +18,7 @@ mongoose
     if (server) {
       console.log(`Server Started Successfully on port!!! 5000`);
       console.log(
-        "----------------------------------------------------------------"
+        "--------------------------------------------------------------"
       );
     } else console.log("server not started");
   })

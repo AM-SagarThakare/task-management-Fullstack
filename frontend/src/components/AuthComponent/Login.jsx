@@ -18,7 +18,7 @@ function Login() {
   const onSubmit = (formData) => {
     loginUser(formData)
       .then((response) => {
-        console.log("in login", response);
+        // console.log("in login", response);
         toast.success("login successful");
         setToken("activeUserToken", response?.data?.token);
         navigate("/user/board");
@@ -40,9 +40,10 @@ function Login() {
             <input
               type="email"
               id="loginName"
-              className="form-control border-btm"
+              className="form-control border-input "
               autoComplete="username"
               {...register("email", { required: true })}
+              // style={{border: '1px solid #bebebe'}}
             />
             <p
               role="alert"
@@ -59,9 +60,10 @@ function Login() {
             <input
               type="password"
               id="loginPassword"
-              autoComplete="current-password border-btm"
-              className="form-control"
+              autoComplete="current-password "
+              className="form-control border-input"
               {...register("password", { required: true, minLength: 4 })}
+              // style={{border: '1px solid #bebebe'}}
             />
             <p
               role="alert"

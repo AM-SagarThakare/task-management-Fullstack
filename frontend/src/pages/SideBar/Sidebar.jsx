@@ -1,26 +1,27 @@
 // css
 import "./Sidebar.css";
 //dependencies
-import React, { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { getAllBoards } from "../../services";
-import { useEffect } from "react";
 
 //react-icons
 import { AiOutlineSetting } from "react-icons/ai";
 import { IoIosPeople } from "react-icons/io";
 import { BiBarChartAlt2 } from "react-icons/bi";
 import { FiChevronsRight, FiChevronsLeft } from "react-icons/fi";
-import {BsFillClipboard2DataFill} from 'react-icons/bs'
+import { BsFillClipboard2DataFill } from "react-icons/bs";
+import { MdOutlineDeleteForever } from "react-icons/md";
 
 function SideBar() {
   const [activeMenu, setActiveMenu] = useState("");
   const [isOpen, setIsOpen] = useState(true);
   const toggleSlideBar = () => setIsOpen(!isOpen);
   const [boardArr, setBoardArr] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('sidebar useffect');
+    console.log("sidebar useffect");
     getAllBoards()
       .then((res) => {
         setBoardArr(res.data);
@@ -67,11 +68,29 @@ function SideBar() {
     );
   });
 
-  const showBoardSubset = boardArr.map((board,i) => {
+  const showBoardSubset = boardArr.map((board, i) => {
+    const openBoardDetails = (index) => {
+      console.log(boardArr[index]);
+      navigate(`/user/board/${boardArr[index].boardTitle}`, {
+        state: { boardID: boardArr[index]._id },
+      });
+    };
+
     return (
-      <div className="d-flex gap-2 border-bottom my-1" key={i}>
-        <BsFillClipboard2DataFill size={20}/>
-        <p className="">{board.boardTitle}</p>
+      <div
+        className="d-flex  my-1 justify-content-between p-2 hoverEffect align-items-center"
+        key={i}
+      >
+        <div
+          className="d-flex gap-2 pointer align-items-center"
+          onClick={() => openBoardDetails(i)}
+        >
+          <BsFillClipboard2DataFill size={20} />
+          <p className="m-0">{board.boardTitle}</p>
+        </div>
+        <div>
+          <MdOutlineDeleteForever size={20} color="#d62020" />
+        </div>
       </div>
     );
   });
@@ -84,7 +103,7 @@ function SideBar() {
           style={{ width: isOpen ? "300px" : "48px" }}
         >
           <div className="mb-1 border-bottom">{showMenu}</div>
-          <div>
+          <div className={showBoardSubset.length > 0 ? "" : "d-none"}>
             <p>board subset</p>
             {showBoardSubset}
           </div>

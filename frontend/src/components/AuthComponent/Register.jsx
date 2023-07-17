@@ -29,7 +29,7 @@ function Register({ userEmail }) {
             <input
               type="text"
               id="registerUsername"
-              className="form-control border-btm"
+              className="form-control border-input"
               placeholder="user name"
               {...register("userNames", { required: true })}
               defaultValue={userEmail}
@@ -50,7 +50,7 @@ function Register({ userEmail }) {
             <input
               type="email"
               id="registerEmail"
-              className="form-control border-btm"
+              className="form-control border-input"
               placeholder="username@gmail.com"
 
               {...register("email", { required: true })}
@@ -70,7 +70,7 @@ function Register({ userEmail }) {
             <input
               type="password"
               id="registerPassword"
-              className="form-control border-btm"
+              className="form-control border-input"
               placeholder="........"
               {...register("password", { required: true })}
             />
@@ -90,7 +90,7 @@ function Register({ userEmail }) {
             <input
               type="password"
               id="registerRepeatPassword"
-              className="form-control border-btm"
+              className="form-control border-input"
               placeholder="........"
               {...register("confirmPassword", { required: true })}
             />

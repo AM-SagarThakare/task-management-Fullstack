@@ -1,7 +1,6 @@
 
 
 const express = require('express');
-const { boardController } = require('../Controllers');
 const { verifyToken } = require('../Middlewares/verifyToken');
 const boardRoutes = require('./board.route')
 const app = express();
