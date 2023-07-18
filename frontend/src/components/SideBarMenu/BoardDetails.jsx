@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { getBoardDetailsByID, updateBoardTitle } from "../../services";
 import { GrEdit } from "react-icons/gr";
 import "~/styles/style.css";
+import "./BoardDetails.css";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import DetailsBgImg from "../../images/photo-1688909987766-8797b4f909b9.jpg";
@@ -13,10 +14,18 @@ function BoardDetails() {
 
   const { register, handleSubmit } = useForm();
   const data = useLocation();
-  console.log(data);
-
   const [board, setBoard] = useState(null);
   const [editStatus, setEditStatus] = useState(false);
+
+  console.log(data.state);
+  
+  const myStyle = {
+    backgroundImage: `url(${DetailsBgImg})`,
+    height: "100vh",
+    backgroundSize: "cover",
+    opacity: 0.8,
+    backgroundRepeat: "no-repeat",
+  };
 
   useEffect(() => {
     getBoardDetailsByID(data?.state?.boardID)
@@ -39,20 +48,23 @@ function BoardDetails() {
     }
     setEditStatus(!editStatus);
   };
-  const myStyle = {
-    backgroundImage: `url(${DetailsBgImg})`,
-    height: "100vh",
-    backgroundSize: "cover",
-    opacity: 0.5,
-    backgroundRepeat: "no-repeat",
+
+  // const displayAllLists = list.map(()=>
+  // <React.Fragment>
+  //   <div>list</div>
+  // </React.Fragment>);
+
+  const addList = () => {
+    console.log("added");
   };
 
   return (
     <React.Fragment>
       <div className="bg-ligh" style={myStyle}>
+        {/* board title  */}
         <div
-          className="border-bottom py-2 ps-4 text-light"
-          style={{ backgroundColor: "rgba(20, 20, 20,0.4)" }}
+          className=" py-2 ps-4 text-light"
+          style={{ backgroundColor: "rgba(20, 20, 20,0.1)" }}
         >
           {editStatus ? (
             <form
@@ -85,9 +97,17 @@ function BoardDetails() {
             </div>
           )}
         </div>
-        <div className=" border border-primary ">
-          <h1>sagar</h1>
+        {/* end board title */}
+
+        {/* board body */}
+        <div className="  ">
+          <h1>sdsddsds</h1>
+          {/* {displayAllLists} */}
+          <div className="p-3 bg-dark col-2 m-3" onClick={addList}>
+            <p>add new list</p>
+          </div>
         </div>
+        {/*end board body */}
       </div>
     </React.Fragment>
   );

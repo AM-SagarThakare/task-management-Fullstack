@@ -3,7 +3,7 @@ import "./Sidebar.css";
 //dependencies
 import React, { useState, useEffect } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { getAllBoards } from "../../services";
+import { deleteBoardByID, getAllBoards } from "../../services";
 
 //react-icons
 import { AiOutlineSetting } from "react-icons/ai";
@@ -14,16 +14,19 @@ import { BsFillClipboard2DataFill } from "react-icons/bs";
 import { MdOutlineDeleteForever } from "react-icons/md";
 
 function SideBar() {
+  console.log("in sidebar ");
+
   const [activeMenu, setActiveMenu] = useState("");
   const [isOpen, setIsOpen] = useState(true);
-  const toggleSlideBar = () => setIsOpen(!isOpen);
   const [boardArr, setBoardArr] = useState([]);
   const navigate = useNavigate();
 
+  const toggleSlideBar = () => setIsOpen(!isOpen);
+
   useEffect(() => {
-    console.log("sidebar useffect");
     getAllBoards()
       .then((res) => {
+        
         setBoardArr(res.data);
       })
       .catch(() => {})
@@ -69,11 +72,24 @@ function SideBar() {
   });
 
   const showBoardSubset = boardArr.map((board, i) => {
+    console.log("boardArr", boardArr);
+
     const openBoardDetails = (index) => {
+      // console.log(b);
       console.log(boardArr[index]);
       navigate(`/user/board/${boardArr[index].boardTitle}`, {
         state: { boardID: boardArr[index]._id },
       });
+    };
+
+    const deleteBoard = (boardID) => {
+      console.log(boardID);
+      deleteBoardByID(boardID)
+        .then((res) => {
+          console.log(res);
+          setBoardArr((prev) => prev.filter((item) => item._id !== boardID));
+        })
+        .catch(() => {});
     };
 
     return (
@@ -89,7 +105,11 @@ function SideBar() {
           <p className="m-0">{board.boardTitle}</p>
         </div>
         <div>
-          <MdOutlineDeleteForever size={20} color="#d62020" />
+          <MdOutlineDeleteForever
+            size={20}
+            color="#d62020"
+            onClick={() => deleteBoard(board._id)}
+          />
         </div>
       </div>
     );
@@ -119,7 +139,7 @@ function SideBar() {
               <FiChevronsRight size={30} onClick={toggleSlideBar} />
             )}
           </div>
-          <Outlet />
+          <Outlet context={[boardArr, setBoardArr]} />
         </div>
       </div>
     </React.Fragment>

@@ -32,9 +32,14 @@ const getAllBoards = async (req, res) => {
 };
 
 const getBoardDetailsByID = async (req, res) => {
-  return res
-    .status(200)
-    .send(await boardService.getBoardDetailsByID(req.params.boardID));
+  console.log("BOARD CONTROLLER");
+  try {
+    return res
+      .status(200)
+      .send(await boardService.getBoardDetailsByID(req.params.boardID));
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 const updateBoard = async (req, res) => {
@@ -50,7 +55,6 @@ const updateBoard = async (req, res) => {
 };
 
 const deleteBoard = async (req, res) => {
-  console.log("in board controller");
   return res
     .status(200)
     .send(await boardService.deleteBoard(req.params.boardID));

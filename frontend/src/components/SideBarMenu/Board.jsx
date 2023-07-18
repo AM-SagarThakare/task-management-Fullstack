@@ -10,17 +10,19 @@ import boardImg from "~/images/board-init-img.svg";
 // folders
 import { CreateBoardModal } from "../";
 import { getAllBoards } from "~/services";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 export default function Board() {
-  console.log('in board ');
+  // console.log('in board ');
+  const [boardArr, setBoardArr] = useOutletContext();
+  // console.log("OutletContext",boardArr,setBoardArr)
 
   const navigate = useNavigate();
   const [boardStatus, setBoardStatus] = useState(false);
-  const [boardArr, setBoardArr] = useState([]);
+  // const [boardArr, setBoardArr] = useState([]);
   const [isLoading, setIsLoading] = useState(true); //
 
-  useEffect( () => {
+  useEffect(() => {
     getAllBoards()
       .then((res) => {
         setBoardArr(res.data);
@@ -50,13 +52,16 @@ export default function Board() {
   };
 
   const loadAllBoards = () => {
+    // console.log(boardArr);
     const openBoardDetails = (index) => {
+    console.log(boardArr);
+    console.log(boardArr[index]);
       navigate(`/user/board/${boardArr[index].boardTitle}`, {
         state: { boardID: boardArr[index]._id },
       });
     };
 
-    return boardArr.map((board, ind) => {
+    return boardArr?.map((board, ind) => {
       return (
         <div className="col-6 col-sm-4 col-lg-2 mb-2 " key={ind}>
           <div
@@ -108,14 +113,14 @@ export default function Board() {
       {/* before loading the proper Function dont show anything */}
       {isLoading
         ? null
-        : boardArr.length === 0
+        : boardArr?.length === 0
         ? initPageOfBoard()
         : boardsAvailable()}
 
       <CreateBoardModal
         boardStatus={boardStatus}
         setBoardStatus={setBoardStatus}
-        setBoardArr= {setBoardArr}
+        setBoardArr={setBoardArr}
       />
     </React.Fragment>
   );
