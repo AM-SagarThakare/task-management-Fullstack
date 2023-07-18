@@ -28,7 +28,7 @@ export default function Board() {
       })
       .catch(() => {})
       .finally(() => setIsLoading(!isLoading));
-  }, [boardStatus]);
+  }, []);
 
   const initPageOfBoard = () => {
     return (
@@ -115,6 +115,7 @@ export default function Board() {
       <CreateBoardModal
         boardStatus={boardStatus}
         setBoardStatus={setBoardStatus}
+        setBoardArr= {setBoardArr}
       />
     </React.Fragment>
   );

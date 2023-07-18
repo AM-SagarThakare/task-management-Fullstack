@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { addNewBoard } from "../../services/boardService";
 import { toast } from "react-toastify";
 
-function CreateBoardModal({ boardStatus, setBoardStatus }) {
+function CreateBoardModal({ boardStatus, setBoardStatus,setBoardArr }) {
   const handleClose = () => {
     setBoardStatus(!boardStatus);
   };
@@ -23,6 +23,7 @@ function CreateBoardModal({ boardStatus, setBoardStatus }) {
         .then((res) => toast.success(res.data.message))
         .catch(() => {});
       setBoardStatus(!boardStatus);
+      setBoardArr(prev=>[...prev,formdata])
     }
   };
 
