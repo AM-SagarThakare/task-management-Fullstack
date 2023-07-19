@@ -8,6 +8,7 @@ import {
 } from "../../services";
 import { GrEdit } from "react-icons/gr";
 import { RxCross2 } from "react-icons/rx";
+import {PiDotsThreeOutlineThin} from "react-icons/pi";
 import "~/styles/style.css";
 import "./BoardDetails.css";
 import { useForm } from "react-hook-form";
@@ -22,7 +23,7 @@ function BoardDetails() {
   const [editStatus, setEditStatus] = useState(false);
   const [isAddListVisible, setIsAddListVisible] = useState(false);
   const data = useLocation();
-  console.log(data.state);
+  // console.log(data.state);
 
   const myStyle = {
     backgroundImage: `url(${DetailsBgImg})`,
@@ -57,15 +58,14 @@ function BoardDetails() {
   const displayAllLists =
     board &&
     board.list.map((list, index) => (
-      <React.Fragment>
-        <div className="list-bg-color col-3 border p-3 m-2  rounded">
-          <div>
-            <p>{list.listTitle}</p>
+        <div className="list-bg-color col-3 border p-3 m-2  rounded" key={index}>
+          <div className="d-flex align-items-center justify-content-between">
+            <p className="m-0">{list.listTitle}</p>
+            <PiDotsThreeOutlineThin size={20}/>
           </div>
 
-          <div className="p-2">+ add new card</div>
+          <div className="p-2 hoverEffect">+ add new card</div>
         </div>
-      </React.Fragment>
     ));
 
   const submitList = (formData) => {
