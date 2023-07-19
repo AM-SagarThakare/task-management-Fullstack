@@ -32,7 +32,6 @@ const getAllBoards = async (req, res) => {
 };
 
 const getBoardDetailsByID = async (req, res) => {
-  console.log("BOARD CONTROLLER");
   try {
     return res
       .status(200)

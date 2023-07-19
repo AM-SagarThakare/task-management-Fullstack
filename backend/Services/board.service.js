@@ -4,7 +4,6 @@ const getAllBoards = async (user_id) => {
   return await boardCollection.find({ boardOwnerID: user_id });
 };
 const getBoardDetailsByID = async (boardID) => {
-  console.log(" board service");
   console.log("boardID", boardID);
   try {
     return await boardCollection.find({ _id: boardID }).populate("list");
