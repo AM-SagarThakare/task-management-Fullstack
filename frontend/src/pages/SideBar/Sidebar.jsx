@@ -26,12 +26,12 @@ function SideBar() {
   useEffect(() => {
     getAllBoards()
       .then((res) => {
-        
+        console.log(res);
         setBoardArr(res.data);
       })
       .catch(() => {})
       .finally(() => {});
-  }, []);
+  }, [boardArr.length]);
 
   const menuItems = [
     {
@@ -72,21 +72,15 @@ function SideBar() {
   });
 
   const showBoardSubset = boardArr.map((board, i) => {
-    console.log("boardArr", boardArr);
-
     const openBoardDetails = (index) => {
-      // console.log(b);
-      console.log(boardArr[index]);
-      navigate(`/user/board/${boardArr[index].boardTitle}`, {
+      navigate(`/user/board/${boardArr[index]._id}`, {
         state: { boardID: boardArr[index]._id },
       });
     };
 
     const deleteBoard = (boardID) => {
-      console.log(boardID);
       deleteBoardByID(boardID)
         .then((res) => {
-          console.log(res);
           setBoardArr((prev) => prev.filter((item) => item._id !== boardID));
         })
         .catch(() => {});
@@ -139,6 +133,7 @@ function SideBar() {
               <FiChevronsRight size={30} onClick={toggleSlideBar} />
             )}
           </div>
+          {console.log(boardArr)}
           <Outlet context={[boardArr, setBoardArr]} />
         </div>
       </div>

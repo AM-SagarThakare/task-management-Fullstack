@@ -17,7 +17,7 @@ function CreateBoardModal({ boardStatus, setBoardStatus, setBoardArr }) {
   } = useForm();
 
   const submit = (formdata) => {
-    console.log(formdata);
+    // console.log(formdata);
     if (Object.keys(errors).length === 0) {
       addNewBoard(formdata)
         .then((res) => toast.success(res.data.message))

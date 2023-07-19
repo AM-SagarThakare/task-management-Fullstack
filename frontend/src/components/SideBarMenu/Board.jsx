@@ -13,20 +13,21 @@ import { getAllBoards } from "~/services";
 import { useNavigate, useOutletContext } from "react-router-dom";
 
 export default function Board() {
-  // console.log('in board ');
+  console.log("in board ");
   const [boardArr, setBoardArr] = useOutletContext();
   // console.log("OutletContext",boardArr,setBoardArr)
 
   const navigate = useNavigate();
   const [boardStatus, setBoardStatus] = useState(false);
-  // const [boardArr, setBoardArr] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); //
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getAllBoards()
       .then((res) => {
-        setBoardArr(res.data);
-        console.log(res);
+        if (res.data.length !== 0) {
+          setBoardArr(res.data);
+          console.log(res);
+        }
       })
       .catch(() => {})
       .finally(() => setIsLoading(!isLoading));
@@ -34,7 +35,7 @@ export default function Board() {
 
   const initPageOfBoard = () => {
     return (
-      <div className="d-flex flex-column align-items-center w-50 mx-auto fs-14px">
+      <div className="d-flex flex-column align-items-center w-50 mx-auto fs-14px w-sm-100 ">
         <img src={boardImg} className="w-100" alt="img" />
 
         <p>
@@ -52,10 +53,7 @@ export default function Board() {
   };
 
   const loadAllBoards = () => {
-    // console.log(boardArr);
     const openBoardDetails = (index) => {
-    console.log(boardArr);
-    console.log(boardArr[index]);
       navigate(`/user/board/${boardArr[index].boardTitle}`, {
         state: { boardID: boardArr[index]._id },
       });
@@ -63,7 +61,7 @@ export default function Board() {
 
     return boardArr?.map((board, ind) => {
       return (
-        <div className="col-6 col-sm-4 col-lg-2 mb-2 " key={ind}>
+        <div className="col-6 col-sm-4 col-lg-2 mb-2 text-break  " key={ind}>
           <div
             style={{ height: "100px", backgroundColor: `#034d82` }}
             className="rounded p-2 opacity-decrease pointer"
@@ -108,6 +106,7 @@ export default function Board() {
 
   return (
     <React.Fragment>
+      {console.log('in return')}
       <h2 className="p-4 border-bottom"> Workspace</h2>
 
       {/* before loading the proper Function dont show anything */}
