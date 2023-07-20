@@ -1,14 +1,22 @@
+const { listCollection } = require("../Models");
+
 // const addNewList = async (boardID) => {
-//   return await 
+//   return await
 // };
 
+
 const addCardID = async (payload) => {
-    return await boardCollection.update(
-      { _id: payload.boardID },
-      { $push: { card: _id } }
-    );
-  };
+  return await listCollection.updateOne(
+    { _id: payload.listID },
+    { $push: { card: payload._id } }
+  );
+};
+
+// const addCardID = async()=>{
+
+// }
 
 module.exports = {
-    // addNewList
-}
+  // addNewList
+  addCardID
+};

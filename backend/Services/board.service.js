@@ -4,14 +4,12 @@ const getAllBoards = async (user_id) => {
   return await boardCollection.find({ boardOwnerID: user_id });
 };
 const getBoardDetailsByID = async (boardID) => {
-  console.log("boardID", boardID);
   try {
     return await boardCollection.find({ _id: boardID }).populate("list");
   } catch (err) {
     console.log(err.message);
   }
 };
-
 const updateBoard = async (payload) => {
   console.log("in board service");
   return await boardCollection.updateOne(

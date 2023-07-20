@@ -4,3 +4,6 @@
 .newlist-bg-color {
     background-color: #7f7f7f36 !important;
 }
+.blur{
+    filter: blur(8px);
+}

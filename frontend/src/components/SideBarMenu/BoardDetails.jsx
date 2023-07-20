@@ -8,7 +8,7 @@ import {
 } from "../../services";
 import { GrEdit } from "react-icons/gr";
 import { RxCross2 } from "react-icons/rx";
-import {PiDotsThreeOutlineThin} from "react-icons/pi";
+import { PiDotsThreeOutlineThin } from "react-icons/pi";
 import "~/styles/style.css";
 import "./BoardDetails.css";
 import { useForm } from "react-hook-form";
@@ -40,7 +40,7 @@ function BoardDetails() {
         console.log(res);
       })
       .catch(() => {});
-  }, [editStatus, data?.state?.boardID, isAddListVisible === false]); // if isAddListVisible is true only that time i want to run useffect
+  }, [editStatus, data?.state?.boardID, isAddListVisible]); // if isAddListVisible is true only that time i want to run useffect
 
   const updateTitle = async (data) => {
     data.boardID = board._id;
@@ -58,14 +58,14 @@ function BoardDetails() {
   const displayAllLists =
     board &&
     board.list.map((list, index) => (
-        <div className="list-bg-color col-3 border p-3 m-2  rounded" key={index}>
-          <div className="d-flex align-items-center justify-content-between">
-            <p className="m-0">{list.listTitle}</p>
-            <PiDotsThreeOutlineThin size={20}/>
-          </div>
-
-          <div className="p-2 hoverEffect">+ add new card</div>
+      <div className="list-bg-color col-3 border p-3 m-2  rounded" key={index}>
+        <div className="d-flex align-items-center justify-content-between ">
+          <p className="m-0">{list.listTitle}</p>
+          <PiDotsThreeOutlineThin className="pointer" size={20} />
         </div>
+
+        <div className="p-2 hoverEffect rounded pointer" >+ add new card</div>
+      </div>
     ));
 
   const submitList = (formData) => {
@@ -126,11 +126,11 @@ function BoardDetails() {
         <div className="overflow-x-scroll d-flex ">
           {displayAllLists}
 
-          {/* conditional rendering for show create new list  */}
+          {/* conditional rendering for show add new list card */}
           {!isAddListVisible ? (
             <div
               className=" p-2 col-3 m-3 newlist-bg-color text-light rounded-3 pointer"
-              style={{height : '45px'}}
+              style={{ height: "45px" }}
               onClick={() => setIsAddListVisible(!isAddListVisible)}
             >
               <span>+ add new list</span>

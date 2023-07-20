@@ -116,9 +116,9 @@ function SideBar() {
           className="vh-100 bg-dark overflow-hidden border-end"
           style={{ width: isOpen ? "300px" : "48px" }}
         >
-          <div className="mb-1 border-bottom">{showMenu}</div>
-          <div className={showBoardSubset.length > 0 ? "" : "d-none"}>
-            <p>board subset</p>
+          <div className="mb-1 border-bottom ">{showMenu}</div>
+          <div className={showBoardSubset.length > 0 ? "p-1" : "d-none"}>
+            <p>My Boards</p>
             {showBoardSubset}
           </div>
         </div>
