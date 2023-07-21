@@ -14,6 +14,7 @@ import "./BoardDetails.css";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import DetailsBgImg from "../../images/photo-1688909987766-8797b4f909b9.jpg";
+import GetCardDetailsModal from "../modals/GetCardDetailsModal";
 
 function BoardDetails() {
   console.log("in board details");
@@ -22,8 +23,10 @@ function BoardDetails() {
   const [board, setBoard] = useState(null);
   const [editStatus, setEditStatus] = useState(false);
   const [isAddListVisible, setIsAddListVisible] = useState(false);
+  const [show, setShow] = useState(false);
+  const [card, setCard] = useState(null);
+
   const data = useLocation();
-  // console.log(data.state);
 
   const myStyle = {
     backgroundImage: `url(${DetailsBgImg})`,
@@ -37,7 +40,7 @@ function BoardDetails() {
     getBoardDetailsByID(data?.state?.boardID)
       .then((res) => {
         setBoard(res.data[0]);
-        console.log(res);
+        console.log(res.data[0].list);
       })
       .catch(() => {});
   }, [editStatus, data?.state?.boardID, isAddListVisible]); // if isAddListVisible is true only that time i want to run useffect
@@ -55,16 +58,36 @@ function BoardDetails() {
     setEditStatus(!editStatus);
   };
 
+  const displayAllCardsByIndex = (listIndex) =>
+    board.list[listIndex].card.map((card, i) => {
+      return (
+        <div
+          className="px-2 py-1 my-2 rounded card-bg-color"
+          key={i}
+          onClick={() => {setShow(!show)
+            
+          }}
+        >
+          <span>{card.cardTitle}</span>
+        </div>
+      );
+    });
+
   const displayAllLists =
     board &&
     board.list.map((list, index) => (
-      <div className="list-bg-color col-3 border p-3 m-2  rounded" key={index}>
+      <div
+        className="list-bg-color col-6 col-sm-4 col-lg-3  p-3 m-2 rounded h-100"
+        key={index}
+      >
         <div className="d-flex align-items-center justify-content-between ">
           <p className="m-0">{list.listTitle}</p>
           <PiDotsThreeOutlineThin className="pointer" size={20} />
         </div>
 
-        <div className="p-2 hoverEffect rounded pointer" >+ add new card</div>
+        {displayAllCardsByIndex(index)}
+
+        <div className="p-2 hoverEffect rounded pointer">+ add new card</div>
       </div>
     ));
 
@@ -159,6 +182,8 @@ function BoardDetails() {
             </form>
           )}
         </div>
+
+        <GetCardDetailsModal show={show} setShow={setShow} card={card} />
         {/*end board body */}
       </div>
     </React.Fragment>

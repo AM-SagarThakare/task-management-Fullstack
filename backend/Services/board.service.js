@@ -5,7 +5,9 @@ const getAllBoards = async (user_id) => {
 };
 const getBoardDetailsByID = async (boardID) => {
   try {
-    return await boardCollection.find({ _id: boardID }).populate("list");
+    return await boardCollection
+      .find({ _id: boardID })
+      .populate({ path: "list", populate: { path: "card" } });
   } catch (err) {
     console.log(err.message);
   }
