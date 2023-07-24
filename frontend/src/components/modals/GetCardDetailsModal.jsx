@@ -4,7 +4,6 @@ import React from "react";
 // import '~/styles/style.css'
 
 function GetCardDetailsModal({ show, setShow }) {
-  console.log('in modal',show);
   const handleClose = () =>setShow(!show);
 
   return (

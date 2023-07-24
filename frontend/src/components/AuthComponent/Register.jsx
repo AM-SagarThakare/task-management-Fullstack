@@ -31,7 +31,7 @@ function Register({ userEmail }) {
               id="registerUsername"
               className="form-control border-input"
               placeholder="user name"
-              {...register("userNames", { required: true })}
+              {...register("userName", { required: true })}
               defaultValue={userEmail}
             />
 

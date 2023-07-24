@@ -1,6 +1,6 @@
 const { validate } = require("../Middlewares");
-const { listCollection, boardCollection } = require("../Models");
-const { boardService } = require("../Services");
+const { listCollection } = require("../Models");
+const { boardService, listService } = require("../Services");
 const { listValidation } = require("../Validations");
 
 const addNewList = async (req, res) => {
@@ -32,6 +32,24 @@ const addNewList = async (req, res) => {
     .catch((error) => res.send(error.message));
 };
 
+const deleteListdByID = async (req, res) => {
+  try {
+    return res.send(await listService.deleteListByID(req.params.listID));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const updateListByID = async (req, res) => {
+  try {
+    res.status(200).send(await listService.updateListByID(req.params.listID, req.body));
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
 module.exports = {
   addNewList,
+  deleteListdByID,
+  updateListByID,
 };

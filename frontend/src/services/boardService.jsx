@@ -8,8 +8,6 @@ const getAllBoards = () => {
   return service.get("/user/board/all-boards");
 };
 const getBoardDetailsByID = (boardID) => {
-  console.log('in board service',boardID);
-  
   return service.get(`/user/board/${boardID}`);
 };
 const updateBoardTitle = (payload) => {

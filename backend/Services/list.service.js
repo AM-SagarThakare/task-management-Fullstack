@@ -4,7 +4,6 @@ const { listCollection } = require("../Models");
 //   return await
 // };
 
-
 const addCardID = async (payload) => {
   return await listCollection.updateOne(
     { _id: payload.listID },
@@ -12,11 +11,17 @@ const addCardID = async (payload) => {
   );
 };
 
-// const addCardID = async()=>{
+const deleteListByID = async (listID) => {
+  return await listCollection.deleteOne({ _id: listID });
+};
 
-// }
+const updateListByID = async (listID, payload) => {
+  return await listCollection.updateOne({ _id: listID }, { $set: payload });
+};
 
 module.exports = {
   // addNewList
-  addCardID
+  addCardID,
+  deleteListByID,
+  updateListByID,
 };

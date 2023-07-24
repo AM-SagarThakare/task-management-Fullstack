@@ -133,7 +133,6 @@ function SideBar() {
               <FiChevronsRight size={30} onClick={toggleSlideBar} />
             )}
           </div>
-          {console.log(boardArr)}
           <Outlet context={[boardArr, setBoardArr]} />
         </div>
       </div>

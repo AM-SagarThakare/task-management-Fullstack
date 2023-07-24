@@ -8,4 +8,6 @@ export {
 
 export { getToken, setToken, deleteToken } from "./localStorageService";
 
-export { addNewList } from "./listService";
+export { addNewList, deleteListByID, updateList } from "./listService";
+
+export { addNewCard } from "./cardService";

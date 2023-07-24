@@ -8,6 +8,8 @@ const { userCollection } = require("../Models");
 const jwt = require("jsonwebtoken");
 
 const registerUser = async (req, res) => {
+
+  console.log(req.body);
   const { error, value } = validate.validateJoiSchema(authValidation.register)(
     req.body
   );
