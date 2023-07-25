@@ -26,15 +26,13 @@ function BoardDetails() {
 
   const [show, setShow] = useState(false);
   const [board, setBoard] = useState(null);
-  const [listEditStatus, setlistEditStatus] = useState(false);
   const [globalIndex, setGlobalIndex] = useState(-1);
   const [editStatus, setEditStatus] = useState(false);
+  const [listEditStatus, setlistEditStatus] = useState(false);
   const [isAddListVisible, setIsAddListVisible] = useState(false);
   const [isAddCardVisible, setIsAddCardVisible] = useState(false);
 
   const data = useLocation();
-
-  console.log(board);
 
   const myStyle = {
     backgroundImage: `url(${DetailsBgImg})`,
@@ -45,11 +43,23 @@ function BoardDetails() {
   };
 
   useEffect(() => {
-    getBoardDetailsByID(data?.state?.boardID)
-      .then((res) => {
-        setBoard(res.data[0]);
-      })
-      .catch(() => {});
+    const fetchBoardDetails = () => {
+      getBoardDetailsByID(data?.state?.boardID)
+        .then((res) => {
+          setBoard(res.data[0]);
+        })
+        .catch(() => {});
+    };
+
+    // Run the API call when isAddListVisible is true
+    if (isAddListVisible) {
+      fetchBoardDetails();
+    }
+
+    // Run the API call when other dependencies change (except isAddListVisible)
+    if (!isAddListVisible) {
+      fetchBoardDetails();
+    }
   }, [editStatus, data?.state?.boardID, isAddListVisible]); // if isAddListVisible is true only that time i want to run useffect
 
   const updateTitle = async (data) => {
@@ -65,6 +75,7 @@ function BoardDetails() {
     setEditStatus(!editStatus);
   };
 
+  // display cards of list
   const displayAllCardsByIndex = (listIndex) =>
     board.list[listIndex].card.map((card, i) => {
       return (
@@ -105,9 +116,6 @@ function BoardDetails() {
   };
 
   const submitListTitle = async (formData, list) => {
-    console.log(formData);
-    console.log(list.listID);
-
     await updateList(formData, list.listID)
       .then((res) => {
         console.log(res);
@@ -140,7 +148,15 @@ function BoardDetails() {
                   placeholder={list.listTitle}
                   {...register("listTitle", { required: true })}
                 />
-                <button className="btn btn-sm btn-outline-info">save</button>
+                <div className="d-flex gap-2 align-items-center">
+                  <button className="btn btn-sm btn-outline-info">save</button>
+                  <RxCross2
+                    size={25}
+                    onClick={() => {
+                      setlistEditStatus(!listEditStatus);
+                    }}
+                  />
+                </div>
               </form>
             ) : (
               <div className="d-flex gap-2 align-items-center gap-2">
