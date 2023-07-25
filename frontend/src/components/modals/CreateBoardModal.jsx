@@ -6,15 +6,23 @@ import { addNewBoard } from "../../services/boardService";
 import { toast } from "react-toastify";
 
 function CreateBoardModal({ boardStatus, setBoardStatus, setBoardArr }) {
-  const handleClose = () => {
-    setBoardStatus(!boardStatus);
-  };
-
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
+
+  const handleClose = () => {
+    resetForm()
+    setBoardStatus(!boardStatus);
+  };
+
+  const resetForm = () => {
+    reset({
+      boardTitle: "",
+    });
+  };
 
   const submit = (formdata) => {
     // console.log(formdata);
@@ -24,7 +32,9 @@ function CreateBoardModal({ boardStatus, setBoardStatus, setBoardArr }) {
         .catch(() => {});
       setBoardStatus(!boardStatus);
       setBoardArr((prev) => [...prev, formdata]);
+      resetForm()
     }
+
   };
 
   return (

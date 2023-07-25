@@ -19,7 +19,6 @@ import { toast } from "react-toastify";
 import DetailsBgImg from "../../images/photo-1688909987766-8797b4f909b9.jpg";
 import GetCardDetailsModal from "../modals/GetCardDetailsModal";
 
-import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 function BoardDetails() {
@@ -451,6 +450,9 @@ function BoardDetails() {
           setIsAddListVisible(!isAddListVisible);
         })
         .catch(() => {});
+      reset({
+        listTitle: "",
+      });
     }
   };
 
