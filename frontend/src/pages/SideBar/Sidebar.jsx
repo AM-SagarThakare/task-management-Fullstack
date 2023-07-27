@@ -12,6 +12,9 @@ import { BiBarChartAlt2 } from "react-icons/bi";
 import { FiChevronsRight, FiChevronsLeft } from "react-icons/fi";
 import { BsFillClipboard2DataFill } from "react-icons/bs";
 import { MdOutlineDeleteForever } from "react-icons/md";
+import Logo from "~/images/AM-logo.png";
+
+// all background images
 
 function SideBar() {
   console.log("in sidebar ");
@@ -103,6 +106,7 @@ function SideBar() {
             size={20}
             color="#d62020"
             onClick={() => deleteBoard(board._id)}
+            className="pointer"
           />
         </div>
       </div>
@@ -116,15 +120,20 @@ function SideBar() {
           className="vh-100 bg-dark overflow-hidden border-end"
           style={{ width: isOpen ? "300px" : "48px" }}
         >
+          <div className="border p-2 d-flex gap-2 align-items-center">
+            <img src={Logo} height="35px" alt="" />
+            <h5 className="m-0"> Workspace</h5>
+          </div>
+
           <div className="mb-1 border-bottom ">{showMenu}</div>
           <div className={showBoardSubset.length > 0 ? "p-1" : "d-none"}>
             <p>My Boards</p>
             {showBoardSubset}
           </div>
         </div>
-        <div className="w-100 position-relative p-2">
+        <div className="w-100 position-relative p-2 ">
           <div
-            className="border position-absolute rounded-circle bg-dark "
+            className="border position-absolute rounded-circle bg-dark pointer"
             style={{ left: "-20px", top: "3px" }}
           >
             {isOpen ? (

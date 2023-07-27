@@ -11,6 +11,7 @@ import boardImg from "~/images/board-init-img.svg";
 import { CreateBoardModal } from "../";
 import { getAllBoards } from "~/services";
 import { useNavigate, useOutletContext } from "react-router-dom";
+import movableIcon from '~/images/movable-icon.svg'
 
 export default function Board() {
   console.log("in board ");
@@ -79,7 +80,8 @@ export default function Board() {
       <React.Fragment>
         <div className="p-3 ">
           <div className="d-flex py-3 gap-2 ">
-            <AiFillProject size={30} />
+            {/* <AiFillProject size={30} /> */}
+            <img src={movableIcon} height={30} alt='' />
             <h4>
               <u>Your Boards</u>
             </h4>

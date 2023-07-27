@@ -4,8 +4,22 @@ import { Button, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { addNewBoard } from "../../services/boardService";
 import { toast } from "react-toastify";
+import { useState } from "react";
+import { IoMdDoneAll } from "react-icons/io";
 
 function CreateBoardModal({ boardStatus, setBoardStatus, setBoardArr }) {
+  const [imgIndex, setImgIndex] = useState(0);
+
+  const images = [
+    "bg-img1.jpeg",
+    "bg-img2.jpeg",
+    "bg-img3.jpeg",
+    "bg-img4.jpeg",
+    "bg-img5.jpeg",
+    "bg-img6.jpeg",
+    "bg-img7.jpeg",
+    "bg-img8.jpeg",
+  ];
   const {
     register,
     handleSubmit,
@@ -14,7 +28,7 @@ function CreateBoardModal({ boardStatus, setBoardStatus, setBoardArr }) {
   } = useForm();
 
   const handleClose = () => {
-    resetForm()
+    resetForm();
     setBoardStatus(!boardStatus);
   };
 
@@ -25,6 +39,7 @@ function CreateBoardModal({ boardStatus, setBoardStatus, setBoardArr }) {
   };
 
   const submit = (formdata) => {
+    
     // console.log(formdata);
     if (Object.keys(errors).length === 0) {
       addNewBoard(formdata)
@@ -32,9 +47,8 @@ function CreateBoardModal({ boardStatus, setBoardStatus, setBoardArr }) {
         .catch(() => {});
       setBoardStatus(!boardStatus);
       setBoardArr((prev) => [...prev, formdata]);
-      resetForm()
+      resetForm();
     }
-
   };
 
   return (
@@ -63,6 +77,35 @@ function CreateBoardModal({ boardStatus, setBoardStatus, setBoardArr }) {
                   ? "Board Title is required"
                   : ""}
               </p>
+              <div className="row ">
+                <p>Select Background </p>
+                {images.map((fileName, index) => {
+                  const imgUrl = require(`~/images/bg-image/${fileName}`);
+                  return (
+                    <div
+                      className="position-relative col-3 d-flex align-items-center justify-content-center "
+                      key={index}
+                    >
+                      <img
+                        className={`hover-border p-1 w-100  ${
+                          imgIndex === index && "border"
+                        }`}
+                        width={50}
+                        src={imgUrl}
+                        alt={fileName}
+                        onClick={() => setImgIndex(index)}
+                      />
+                      {imgIndex === index && (
+                        <IoMdDoneAll
+                          size={50}
+                          className="position-absolute opacity-50"
+                          style={{ zIndex: "100" }}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </Modal.Body>
           <Modal.Footer>
