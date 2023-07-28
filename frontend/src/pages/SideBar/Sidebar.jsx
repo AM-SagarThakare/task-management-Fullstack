@@ -29,7 +29,8 @@ function SideBar() {
   useEffect(() => {
     getAllBoards()
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
+        
         setBoardArr(res.data);
       })
       .catch(() => {})
@@ -118,7 +119,7 @@ function SideBar() {
       <div className="d-flex bg-dark primary-color">
         <div
           className="vh-100 bg-dark overflow-hidden border-end"
-          style={{ width: isOpen ? "300px" : "48px" }}
+          style={{ width: isOpen ? "300px" : "10px" }}
         >
           <div className="border p-2 d-flex gap-2 align-items-center">
             <img src={Logo} height="35px" alt="" />
@@ -134,7 +135,7 @@ function SideBar() {
         <div className="w-100 position-relative p-2 ">
           <div
             className="border position-absolute rounded-circle bg-dark pointer"
-            style={{ left: "-20px", top: "3px" }}
+            style={{ left: "-10px", top: "3px" ,zIndex:'100'}}
           >
             {isOpen ? (
               <FiChevronsLeft size={30} onClick={toggleSlideBar} />
