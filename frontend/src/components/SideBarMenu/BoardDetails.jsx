@@ -84,7 +84,7 @@ function BoardDetails() {
   // display cards of list
   const displayAllCardsByIndex = (listIndex) =>
     board.list[listIndex].card.map((card, i) => {
-      console.log(card);
+      // console.log(card);
 
       return (
         <Draggable key={i} draggableId={card._id || "45648749424874"} index={i}>
@@ -466,16 +466,38 @@ function BoardDetails() {
   /* ----------------------------------------------------------------------------------------------------------------------------- */
 
   function onDragEnd(result) {
-    const { source, destination } = result;
 
+    console.log(result);
+    
+    const reorderList = (list, startIndex, endIndex) => {
+      const result = Array.from(list);
+      const [removed] = result.splice(startIndex, 1);
+      result.splice(endIndex, 0, removed);
+      return result;
+    };
+
+    const { source, destination } = result;
+    console.log(source, destination);
     // dropped outside the list
     if (!destination) {
       return;
     }
     const sInd = +source.droppableId;
     const dInd = +destination.droppableId;
+    if (destination.droppableId === "dropableIdd") {
+      //   console.log(result);
+      //   // dropped outside the list
+      //   if (!result.destination) {
+      //     return;
+      //   }
 
-    if (sInd === dInd) {
+      const list = reorderList(
+        board.list,
+        result.source.index,
+        result.destination.index
+      );
+      setBoard({ ...board, list });
+    } else if (sInd === dInd) {
       const updatedList = reorder(
         board.list[sInd],
         source.index,
@@ -483,6 +505,8 @@ function BoardDetails() {
       );
 
       var list = board.list;
+      console.log("list index123", list[sInd]);
+
       list[sInd].card = updatedList;
     } else {
       const result = move(
@@ -491,8 +515,10 @@ function BoardDetails() {
         source,
         destination
       );
+
       const list = [...board.list];
 
+      console.log("list index", list[sInd]);
       list[sInd].card = result[sInd];
       list[dInd].card = result[dInd];
 
@@ -504,160 +530,161 @@ function BoardDetails() {
   const displayAllLists = () => {
     return (
       <>
-        <div style={{ display: "flex" }}>
-          <DragDropContext onDragEnd={onDragEnd}>
-            {board?.list?.map((list, ind) => (
-              // {state.map((el, ind) => (
-              <Droppable key={ind} droppableId={`${ind}`}>
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    className="list-bg-color col-6 col-sm-4 col-lg-3  p-3 m-2 rounded h-100"
-                    key={ind}
-                  >
-                    <div className="d-flex align-items-center justify-content-between ">
-                      {/* <p>this is list {list?.listTitle}</p> */}
-
-                      {listEditStatus && globalIndex === ind ? (
-                        <form
-                          className="d-flex flex-column align-items-start gap-1"
-                          onSubmit={handleSubmit((formData) =>
-                            submitListTitle(formData, { listID: list._id })
-                          )}
+        <div style={{ display: "flex"}}>
+          <DragDropContext
+            onDragEnd={onDragEnd}
+          >
+            <Droppable droppableId={"dropableIdd"} >
+              {(provided, snapshot) => (
+                <div ref={provided.innerRef} className="d-flex">
+                  {board?.list?.map((list, ind) => (
+                    <Draggable
+                      index={ind}
+                      key={list._id}
+                      draggableId={list._id || "45648749424874"}
+                    >
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className="list-bg-color col-6 col-sm-4 col-lg-3 p-3 m-2 rounded   border d-flex"
                         >
-                          <input
-                            className="bg-transparent w-75 border-bottom border-0 primary-color"
-                            placeholder={list.listTitle}
-                            {...register("listTitle", { required: true })}
-                          />
-                          <div className="d-flex gap-2 align-items-center">
-                            <button className="btn btn-sm btn-outline-info">
-                              save
-                            </button>
-                            <RxCross2
-                              size={25}
-                              onClick={() => {
-                                setlistEditStatus(!listEditStatus);
-                              }}
-                            />
-                          </div>
-                        </form>
-                      ) : (
-                        <div className="d-flex gap-2 align-items-center gap-2">
-                          <p className="m-0">{list.listTitle}</p>
+                          <Droppable key={list._id} droppableId={`${ind}`}>
+                            {(provided, snapshot) => (
+                              <div
+                                ref={provided.innerRef}
+                                key={ind}
+                                className="w-100"
+                              >
+                                <div className="d-flex align-items-center justify-content-between ">
+                                  {/* <p>this is list {list?.listTitle}</p> */}
 
-                          <MdOutlineModeEditOutline
-                            className="pointer"
-                            size={17}
-                            onClick={() => {
-                              setGlobalIndex(ind);
-                              setlistEditStatus(!listEditStatus);
-                            }}
-                          />
+                                  {listEditStatus && globalIndex === ind ? (
+                                    <form
+                                      className="d-flex flex-column align-items-start gap-1"
+                                      onSubmit={handleSubmit((formData) =>
+                                        submitListTitle(formData, {
+                                          listID: list._id,
+                                        })
+                                      )}
+                                    >
+                                      <input
+                                        className="bg-transparent w-75 border-bottom border-0 primary-color"
+                                        placeholder={list.listTitle}
+                                        {...register("listTitle", {
+                                          required: true,
+                                        })}
+                                      />
+                                      <div className="d-flex gap-2 align-items-center">
+                                        <button className="btn btn-sm btn-outline-info">
+                                          save
+                                        </button>
+                                        <RxCross2
+                                          size={25}
+                                          onClick={() => {
+                                            setlistEditStatus(!listEditStatus);
+                                          }}
+                                        />
+                                      </div>
+                                    </form>
+                                  ) : (
+                                    <div className="d-flex gap-2 align-items-center gap-2">
+                                      <p className="m-0">{list.listTitle}</p>
+
+                                      <MdOutlineModeEditOutline
+                                        className="pointer"
+                                        size={17}
+                                        onClick={() => {
+                                          setGlobalIndex(ind);
+                                          setlistEditStatus(!listEditStatus);
+                                        }}
+                                      />
+                                    </div>
+                                  )}
+                                  <div className="dropdown">
+                                    <PiDotsThreeOutlineThin
+                                      className="pointer dropdown-toggle "
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                      size={20}
+                                    />
+
+                                    <ul className="dropdown-menu ">
+                                      <li>
+                                        <span
+                                          className="dropdown-item pointer"
+                                          onClick={() => deleteList(list._id)}
+                                        >
+                                          delete
+                                        </span>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+
+                                {displayAllCardsByIndex(ind)}
+
+                                {isAddCardVisible && globalIndex === ind ? (
+                                  <form
+                                    className="p-2 text-light list-bg-color rounded-3 pointer col-3 d-flex flex-column align-items-start gap-2 end-0 w-100"
+                                    onSubmit={handleSubmit((formData) =>
+                                      submitCard(formData, {
+                                        listID: list._id,
+                                        listIndex: ind,
+                                      })
+                                    )}
+                                  >
+                                    <input
+                                      className="rounded px-2 text-light w-100"
+                                      placeholder="enter card name"
+                                      style={{
+                                        backgroundColor: "#22272B",
+                                        border: "1px solid #85B8FF",
+                                      }}
+                                      {...register("cardTitle", {
+                                        required: true,
+                                      })}
+                                    />
+
+                                    <div className="d-flex align-items-center gap-2 ">
+                                      <button className="btn btn-sm btn-warning">
+                                        Add card{" "}
+                                      </button>
+                                      <RxCross2
+                                        size={25}
+                                        onClick={() =>
+                                          setIsAddCardVisible(!isAddCardVisible)
+                                        }
+                                      />
+                                    </div>
+                                  </form>
+                                ) : (
+                                  <div
+                                    className="p-2 hoverEffect rounded pointer"
+                                    onClick={() => {
+                                      setIsAddCardVisible(!isAddCardVisible);
+                                      setGlobalIndex(ind);
+                                    }}
+                                  >
+                                    + add new card
+                                  </div>
+                                )}
+
+                                {provided.placeholder}
+                              </div>
+                            )}
+                          </Droppable>
                         </div>
                       )}
-                      <div className="dropdown">
-                        <PiDotsThreeOutlineThin
-                          className="pointer dropdown-toggle "
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                          size={20}
-                        />
-
-                        <ul className="dropdown-menu ">
-                          <li>
-                            <span
-                              className="dropdown-item pointer"
-                              onClick={() => deleteList(list._id)}
-                            >
-                              delete
-                            </span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    {displayAllCardsByIndex(ind)}
-
-                    {/* {list.card.map((card, i) => {
-                      console.log(card);
-
-                      return (
-                        <Draggable key={i} draggableId={card._id} index={i}>
-                          {(provided, snapshot) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                            >
-                              <div
-                                className="px-2 py-1 my-2 rounded card-bg-color pointer"
-                                key={i}
-                                onClick={() => {
-                                  setShow(!show);
-                                }}
-                              >
-                                <span>{card.cardTitle}</span>
-                              </div>
-                            </div>
-                          )}
-                        </Draggable>
-                        // ))}
-                      );
-                    })} */}
-
-                    {isAddCardVisible && globalIndex === ind ? (
-                      <form
-                        className="p-2 text-light list-bg-color rounded-3 pointer col-3 d-flex flex-column align-items-start gap-2 end-0 w-100"
-                        onSubmit={handleSubmit((formData) =>
-                          submitCard(formData, {
-                            listID: list._id,
-                            listIndex: ind,
-                          })
-                        )}
-                      >
-                        <input
-                          className="rounded px-2 text-light w-100"
-                          placeholder="enter card name"
-                          style={{
-                            backgroundColor: "#22272B",
-                            border: "1px solid #85B8FF",
-                          }}
-                          {...register("cardTitle", { required: true })}
-                        />
-
-                        <div className="d-flex align-items-center gap-2 ">
-                          <button className="btn btn-sm btn-warning">
-                            Add card{" "}
-                          </button>
-                          <RxCross2
-                            size={25}
-                            onClick={() =>
-                              setIsAddCardVisible(!isAddCardVisible)
-                            }
-                          />
-                        </div>
-                      </form>
-                    ) : (
-                      <div
-                        className="p-2 hoverEffect rounded pointer"
-                        onClick={() => {
-                          setIsAddCardVisible(!isAddCardVisible);
-                          setGlobalIndex(ind);
-                        }}
-                      >
-                        + add new card
-                      </div>
-                    )}
-
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            ))}
+                    </Draggable>
+                  ))}
+                </div>
+              )}
+            </Droppable>
           </DragDropContext>
           {/* conditional rendering for show add new list card */}
-          {!isAddListVisible ? (
+          {/* {!isAddListVisible ? (
             <div
               className=" p-2 col-3 m-3 newlist-bg-color text-light rounded-3 pointer"
               style={{ height: "45px" }}
@@ -687,7 +714,7 @@ function BoardDetails() {
                 />
               </div>
             </form>
-          )}
+          )} */}
         </div>
       </>
     );

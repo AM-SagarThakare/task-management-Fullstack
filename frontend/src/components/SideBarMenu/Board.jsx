@@ -108,7 +108,6 @@ export default function Board() {
 
   return (
     <React.Fragment>
-      {console.log('in return')}
       <h2 className="p-4 border-bottom"> Workspace</h2>
 
       {/* before loading the proper Function dont show anything */}

@@ -121,7 +121,7 @@ function SideBar() {
           className="vh-100 bg-dark overflow-hidden border-end"
           style={{ width: isOpen ? "300px" : "10px" }}
         >
-          <div className="border p-2 d-flex gap-2 align-items-center">
+          <div className=" p-2 d-flex gap-2 align-items-center">
             <img src={Logo} height="35px" alt="" />
             <h5 className="m-0"> Workspace</h5>
           </div>
