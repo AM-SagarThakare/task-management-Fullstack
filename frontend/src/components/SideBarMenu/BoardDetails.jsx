@@ -20,6 +20,8 @@ import DetailsBgImg from "../../images/photo-1688909987766-8797b4f909b9.jpg";
 import GetCardDetailsModal from "../modals/GetCardDetailsModal";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import Column from "./Column";
+import reorder, { reorderQuoteMap } from "./Reorder";
 
 function BoardDetails() {
   console.log("in board details");
@@ -34,7 +36,7 @@ function BoardDetails() {
   const [isAddListVisible, setIsAddListVisible] = useState(false);
   const [isAddCardVisible, setIsAddCardVisible] = useState(false);
 
-  const [state, setState] = useState([getItems(10), getItems(5, 10)]);
+  // const [state, setState] = useState([getItems(10), getItems(5, 10)]);
 
   const data = useLocation();
   console.log(board);
@@ -465,76 +467,73 @@ function BoardDetails() {
 
   /* ----------------------------------------------------------------------------------------------------------------------------- */
 
-  function onDragEnd(result) {
+  // function onDragEnd(result) {
+  //   console.log(result);
 
-    console.log(result);
-    
-    const reorderList = (list, startIndex, endIndex) => {
-      const result = Array.from(list);
-      const [removed] = result.splice(startIndex, 1);
-      result.splice(endIndex, 0, removed);
-      return result;
-    };
+  //   const reorderList = (list, startIndex, endIndex) => {
+  //     const result = Array.from(list);
+  //     const [removed] = result.splice(startIndex, 1);
+  //     result.splice(endIndex, 0, removed);
+  //     return result;
+  //   };
 
-    const { source, destination } = result;
-    console.log(source, destination);
-    // dropped outside the list
-    if (!destination) {
-      return;
-    }
-    const sInd = +source.droppableId;
-    const dInd = +destination.droppableId;
-    if (destination.droppableId === "dropableIdd") {
-      //   console.log(result);
-      //   // dropped outside the list
-      //   if (!result.destination) {
-      //     return;
-      //   }
+  //   const { source, destination } = result;
+  //   console.log(source, destination);
+  //   // dropped outside the list
+  //   if (!destination) {
+  //     return;
+  //   }
+  //   const sInd = +source.droppableId;
+  //   const dInd = +destination.droppableId;
+  //   if (destination.droppableId === "dropableIdd") {
+  //     //   console.log(result);
+  //     //   // dropped outside the list
+  //     //   if (!result.destination) {
+  //     //     return;
+  //     //   }
 
-      const list = reorderList(
-        board.list,
-        result.source.index,
-        result.destination.index
-      );
-      setBoard({ ...board, list });
-    } else if (sInd === dInd) {
-      const updatedList = reorder(
-        board.list[sInd],
-        source.index,
-        destination.index
-      );
+  //     const list = reorderList(
+  //       board.list,
+  //       result.source.index,
+  //       result.destination.index
+  //     );
+  //     setBoard({ ...board, list });
+  //   } else if (sInd === dInd) {
+  //     const updatedList = reorder(
+  //       board.list[sInd],
+  //       source.index,
+  //       destination.index
+  //     );
 
-      var list = board.list;
-      console.log("list index123", list[sInd]);
+  //     var list = board.list;
+  //     console.log("list index123", list[sInd]);
 
-      list[sInd].card = updatedList;
-    } else {
-      const result = move(
-        board.list[sInd],
-        board.list[dInd],
-        source,
-        destination
-      );
+  //     list[sInd].card = updatedList;
+  //   } else {
+  //     const result = move(
+  //       board.list[sInd],
+  //       board.list[dInd],
+  //       source,
+  //       destination
+  //     );
 
-      const list = [...board.list];
+  //     const list = [...board.list];
 
-      console.log("list index", list[sInd]);
-      list[sInd].card = result[sInd];
-      list[dInd].card = result[dInd];
+  //     console.log("list index", list[sInd]);
+  //     list[sInd].card = result[sInd];
+  //     list[dInd].card = result[dInd];
 
-      setBoard({ ...board, list });
-    }
-  }
+  //     setBoard({ ...board, list });
+  //   }
+  // }
 
   // want to move card
   const displayAllLists = () => {
     return (
       <>
-        <div style={{ display: "flex"}}>
-          <DragDropContext
-            onDragEnd={onDragEnd}
-          >
-            <Droppable droppableId={"dropableIdd"} >
+        <div style={{ display: "flex" }}>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId={"dropableIdd"}>
               {(provided, snapshot) => (
                 <div ref={provided.innerRef} className="d-flex">
                   {board?.list?.map((list, ind) => (
@@ -736,6 +735,126 @@ function BoardDetails() {
     }
   };
 
+  // ------------------------------------------------- show list new code ------------------------------------------------
+  const transformedObject = {};
+
+board?.list.forEach(list => {
+    transformedObject[list.listTitle] = list.card;
+});
+
+// console.log(transformedObject);
+  const [columns, setColumns] = useState(transformedObject);
+
+  const [ordered, setOrdered] = useState(
+    board?.list.map((item) => item.listTitle) || []
+  );
+  useEffect(()=>{
+    console.log("useEffect")
+    setOrdered( board?.list.map((item) => item.listTitle))  
+  },[board])
+
+  console.log("board",board)
+  // console.log("ordered",board?.list.map((item) => item.listTitle))
+  console.log("ordered",ordered)
+  const onDragEnd = (result) => {
+    if (result.combine) {
+      if (result.type === "COLUMN") {
+        const shallow = [...ordered];
+        console.log("shallow",shallow)
+        shallow.splice(result.source.index, 1);
+        setOrdered(shallow);
+        const orderedList = shallow.map(listTitle => {
+          return board.list.find(list => list.listTitle === listTitle);
+      });
+      
+      console.log(orderedList);
+      
+        return;
+      }
+
+      const column = columns[result.source.droppableId];
+      const withQuoteRemoved = [...column];
+
+      withQuoteRemoved.splice(result.source.index, 1);
+
+      const orderedColumns = {
+        ...columns,
+        [result.source.droppableId]: withQuoteRemoved,
+      };
+      setColumns(orderedColumns);
+      return;
+    }
+
+    // dropped nowhere
+    if (!result.destination) {
+      return;
+    }
+
+    const source = result.source;
+    const destination = result.destination;
+
+    // did not move anywhere - can bail early
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    ) {
+      return;
+    }
+
+    // reordering column
+    if (result.type === "COLUMN") {
+      console.log('reordering column',ordered);
+      const reorderedorder = reorder(ordered, source.index, destination.index);
+      console.log('reordering column return',reorderedorder);
+
+      setOrdered(()=>reorderedorder);
+
+
+      return;
+    }
+
+    const data = reorderQuoteMap({
+      quoteMap: columns,
+      source,
+      destination,
+    });
+
+    setColumns(data.quoteMap);
+  };
+
+  const showList = () => {
+    console.log("in showlist");
+    // console.log(board);
+
+    return (
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable
+          droppableId="board"
+          type="COLUMN"
+          direction="horizontal"
+          ignoreContainerClipping={false}
+          isCombineEnabled={false}
+        >
+          {(provided) => (
+            <div ref={provided.innerRef} {...provided.droppableProps} className="d-flex gap-3" >
+              {board?.list.map((list, index) => (
+                <Column
+                  key={list.listTitle}
+                  index={index}
+                  title={list.listTitle}
+                  quotes={list.card}
+                  // isScrollable={withScrollableColumns}
+                  // isCombineEnabled={isCombineEnabled}
+                  // useClone={useClone}
+                />
+              ))}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+    );
+  };
+
   return (
     <React.Fragment>
       <div className="h-100" style={myStyle}>
@@ -778,7 +897,8 @@ function BoardDetails() {
         {/* end board title */}
 
         {/* board body */}
-        <div className="overflow-x-scroll vh-91">{displayAllLists()}</div>
+        {/* <div className="overflow-x-scroll vh-91">{displayAllLists()}</div> */}
+        <div className="overflow-x-scroll vh-91">{showList()}</div>
 
         <GetCardDetailsModal show={show} setShow={setShow} />
         {/*end board body */}
@@ -788,55 +908,55 @@ function BoardDetails() {
 }
 
 // fake data generator
-const getItems = (count, offset = 0) =>
-  Array.from({ length: count }, (v, k) => k).map((k) => ({
-    id: `item-${k + offset}-${new Date().getTime()}`,
-    content: `item ${k + offset}`,
-  }));
+// const getItems = (count, offset = 0) =>
+//   Array.from({ length: count }, (v, k) => k).map((k) => ({
+//     id: `item-${k + offset}-${new Date().getTime()}`,
+//     content: `item ${k + offset}`,
+//   }));
 
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list.card);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
+// const reorder = (list, startIndex, endIndex) => {
+//   const result = Array.from(list.card);
+//   const [removed] = result.splice(startIndex, 1);
+//   result.splice(endIndex, 0, removed);
 
-  return result;
-};
+//   return result;
+// };
 
 /**
  * Moves an item from one list to another list.
  */
-const move = (source, destination, droppableSource, droppableDestination) => {
-  const sourceClone = Array.from(source.card);
-  const destClone = Array.from(destination.card);
+// const move = (source, destination, droppableSource, droppableDestination) => {
+//   const sourceClone = Array.from(source.card);
+//   const destClone = Array.from(destination.card);
 
-  const [removed] = sourceClone.splice(droppableSource.index, 1);
+//   const [removed] = sourceClone.splice(droppableSource.index, 1);
 
-  destClone.splice(droppableDestination.index, 0, removed);
+//   destClone.splice(droppableDestination.index, 0, removed);
 
-  const result = {};
-  result[droppableSource.droppableId] = sourceClone;
-  result[droppableDestination.droppableId] = destClone;
+//   const result = {};
+//   result[droppableSource.droppableId] = sourceClone;
+//   result[droppableDestination.droppableId] = destClone;
 
-  return result;
-};
-const grid = 8;
+//   return result;
+// };
+// const grid = 8;
 
-const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: "none",
-  padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
+// const getItemStyle = (isDragging, draggableStyle) => ({
+//   // some basic styles to make the items look a bit nicer
+//   userSelect: "none",
+//   padding: grid * 2,
+//   margin: `0 0 ${grid}px 0`,
 
-  // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
+//   // change background colour if dragging
+//   background: isDragging ? "lightgreen" : "grey",
 
-  // styles we need to apply on draggables
-  ...draggableStyle,
-});
-const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
-  padding: grid,
-  width: 250,
-});
+//   // styles we need to apply on draggables
+//   ...draggableStyle,
+// });
+// const getListStyle = (isDraggingOver) => ({
+//   background: isDraggingOver ? "lightblue" : "lightgrey",
+//   padding: grid,
+//   width: 250,
+// });
 
 export default BoardDetails;
