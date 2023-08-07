@@ -3,8 +3,6 @@ import QuoteList from "./List";
 
 const Column = (props) => {
 
-  console.log('in  columnnnn');
-
   const title = props.title;
   const quotes = props.quotes; // in our case quote is card[]
   const index = props.index;
@@ -12,9 +10,9 @@ const Column = (props) => {
     <Draggable draggableId={title} index={index}>
       {(provided, snapshot) => (
         <div ref={provided.innerRef} {...provided.draggableProps}>
-          <div isDragging={snapshot.isDragging}>
+          <div isdragging={snapshot.isDragging.toString()}>
             <div
-              isDragging={snapshot.isDragging}
+              isdragging={snapshot.isDragging.toString()}
               {...provided.dragHandleProps}
               // aria-label={`${title} quote list`}
             >

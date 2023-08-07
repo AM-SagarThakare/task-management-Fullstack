@@ -39,7 +39,6 @@ function BoardDetails() {
   // const [state, setState] = useState([getItems(10), getItems(5, 10)]);
 
   const data = useLocation();
-  console.log(board);
 
   const myStyle = {
     backgroundImage: `url(${DetailsBgImg})`,
@@ -53,7 +52,6 @@ function BoardDetails() {
     const fetchBoardDetails = () => {
       getBoardDetailsByID(data?.state?.boardID)
         .then((res) => {
-          console.log("setboard()");
           setBoard(res.data[0]);
         })
         .catch(() => {});
@@ -69,6 +67,7 @@ function BoardDetails() {
       fetchBoardDetails();
     }
   }, [editStatus, data?.state?.boardID, isAddListVisible]); // if isAddListVisible is true only that time i want to run useffect
+  console.log(board);
 
   const updateTitle = async (data) => {
     data.boardID = board._id;
@@ -85,9 +84,7 @@ function BoardDetails() {
 
   // display cards of list
   const displayAllCardsByIndex = (listIndex) =>
-    board.list[listIndex].card.map((card, i) => {
-      // console.log(card);
-
+    board?.list[listIndex]?.card.map((card, i) => {
       return (
         <Draggable key={i} draggableId={card._id || "45648749424874"} index={i}>
           {/*  '45648749424874' - If we don't provide this ID, then a draggableId error occurs. it is dummy _id value */}
@@ -141,9 +138,7 @@ function BoardDetails() {
 
   const submitListTitle = async (formData, list) => {
     await updateList(formData, list.listID)
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch(() => {});
 
     setlistEditStatus(!listEditStatus);
@@ -158,8 +153,6 @@ function BoardDetails() {
           key={index}
         >
           <div className="d-flex align-items-center justify-content-between ">
-            {console.log(globalIndex)}
-
             {listEditStatus && globalIndex === index ? (
               <form
                 className="d-flex flex-column align-items-start gap-1"
@@ -268,7 +261,6 @@ function BoardDetails() {
   // };
 
   // function onDragEnd(result) {
-  //   console.log(result);
   //   // dropped outside the list
   //   if (!result.destination) {
   //     return;
@@ -423,11 +415,11 @@ function BoardDetails() {
   //               ))}
 
   //               {/* conditional rendering for show add new list card */}
-  //               {!isAddListVisible ? (
+  //               {!isAddListVisible ? (x`
   //                 <div
   //                   className=" p-2 col-3 m-3 newlist-bg-color text-light rounded-3 pointer"
   //                   style={{ height: "45px" }}
-  //                   onClick={() => setIsAddListVisible(!isAddListVisible)}
+  //                   onClick={() => setIsAddListVisible(!isAddL istVisible)}
   //                 >
   //                   <span>+ add new list</span>
   //                 </div>
@@ -468,7 +460,6 @@ function BoardDetails() {
   /* ----------------------------------------------------------------------------------------------------------------------------- */
 
   // function onDragEnd(result) {
-  //   console.log(result);
 
   //   const reorderList = (list, startIndex, endIndex) => {
   //     const result = Array.from(list);
@@ -478,7 +469,6 @@ function BoardDetails() {
   //   };
 
   //   const { source, destination } = result;
-  //   console.log(source, destination);
   //   // dropped outside the list
   //   if (!destination) {
   //     return;
@@ -486,7 +476,6 @@ function BoardDetails() {
   //   const sInd = +source.droppableId;
   //   const dInd = +destination.droppableId;
   //   if (destination.droppableId === "dropableIdd") {
-  //     //   console.log(result);
   //     //   // dropped outside the list
   //     //   if (!result.destination) {
   //     //     return;
@@ -506,7 +495,6 @@ function BoardDetails() {
   //     );
 
   //     var list = board.list;
-  //     console.log("list index123", list[sInd]);
 
   //     list[sInd].card = updatedList;
   //   } else {
@@ -519,7 +507,6 @@ function BoardDetails() {
 
   //     const list = [...board.list];
 
-  //     console.log("list index", list[sInd]);
   //     list[sInd].card = result[sInd];
   //     list[dInd].card = result[dInd];
 
@@ -738,52 +725,48 @@ function BoardDetails() {
   // ------------------------------------------------- show list new code ------------------------------------------------
   const transformedObject = {};
 
-board?.list.forEach(list => {
+  board?.list.forEach((list) => {
     transformedObject[list.listTitle] = list.card;
-});
+  });
 
-// console.log(transformedObject);
   const [columns, setColumns] = useState(transformedObject);
 
   const [ordered, setOrdered] = useState(
     board?.list.map((item) => item.listTitle) || []
   );
-  useEffect(()=>{
-    console.log("useEffect")
-    setOrdered( board?.list.map((item) => item.listTitle))  
-  },[board])
+  useEffect(() => {
+    setOrdered(board?.list.map((item) => item.listTitle));
+  }, [board]);
 
-  console.log("board",board)
-  // console.log("ordered",board?.list.map((item) => item.listTitle))
-  console.log("ordered",ordered)
   const onDragEnd = (result) => {
-    if (result.combine) {
-      if (result.type === "COLUMN") {
-        const shallow = [...ordered];
-        console.log("shallow",shallow)
-        shallow.splice(result.source.index, 1);
-        setOrdered(shallow);
-        const orderedList = shallow.map(listTitle => {
-          return board.list.find(list => list.listTitle === listTitle);
-      });
-      
-      console.log(orderedList);
-      
-        return;
-      }
+    console.log(result);
 
-      const column = columns[result.source.droppableId];
-      const withQuoteRemoved = [...column];
+    // if (result.combine) {
+    //   if (result.type === "COLUMN") {
+    //     const shallow = [...ordered];
+    //     shallow.splice(result.source.index, 1);
+    //     setOrdered(shallow);
+    //     const orderedList = shallow.map((listTitle) => {
+    //       return board.list.find((list) => list.listTitle === listTitle);
+    //     });
 
-      withQuoteRemoved.splice(result.source.index, 1);
+    //     board.list = orderedList;
+    //     setBoard(board);
+    //     return;
+    //   }
 
-      const orderedColumns = {
-        ...columns,
-        [result.source.droppableId]: withQuoteRemoved,
-      };
-      setColumns(orderedColumns);
-      return;
-    }
+    //   const column = columns[result.source.droppableId];
+    //   const withQuoteRemoved = [...column];
+
+    //   withQuoteRemoved.splice(result.source.index, 1);
+
+    //   const orderedColumns = {
+    //     ...columns,
+    //     [result.source.droppableId]: withQuoteRemoved,
+    //   };
+    //   setColumns(orderedColumns);
+    //   return;
+    // }
 
     // dropped nowhere
     if (!result.destination) {
@@ -803,29 +786,39 @@ board?.list.forEach(list => {
 
     // reordering column
     if (result.type === "COLUMN") {
-      console.log('reordering column',ordered);
       const reorderedorder = reorder(ordered, source.index, destination.index);
-      console.log('reordering column return',reorderedorder);
 
-      setOrdered(()=>reorderedorder);
+      setOrdered(() => reorderedorder);
 
+      const orderedList = reorderedorder.map((listTitle) => {
+        return board.list.find((list) => list.listTitle === listTitle);
+      });
+
+      board.list = orderedList;
+      setBoard(board);
 
       return;
     }
 
+    console.log(transformedObject);
+
     const data = reorderQuoteMap({
-      quoteMap: columns,
+      quoteMap: transformedObject,
       source,
       destination,
     });
+    console.log("data.quoteMap", data.quoteMap);
 
-    setColumns(data.quoteMap);
+    const updatedBoardList = board?.list.map((item) => {
+      item.card = data.quoteMap[item.listTitle];
+      return item;
+    });
+    setBoard((prev) => {
+      return { ...prev, list: updatedBoardList };
+    });
   };
 
   const showList = () => {
-    console.log("in showlist");
-    // console.log(board);
-
     return (
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable
@@ -836,7 +829,11 @@ board?.list.forEach(list => {
           isCombineEnabled={false}
         >
           {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps} className="d-flex gap-3" >
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className="d-flex gap-3"
+            >
               {board?.list.map((list, index) => (
                 <Column
                   key={list.listTitle}

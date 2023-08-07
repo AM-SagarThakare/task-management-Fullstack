@@ -1,14 +1,14 @@
 import React from "react";
 
 function QuoteItem(props) {
-  const { quote, isDragging, isGroupedOver, provided, style, isClone, index } =
+  const { quote, isDragging, isGroupedOver, provided, isClone, index } =
     props;
 
   return (
     <div
-      isDragging={isDragging}
-      isGroupedOver={isGroupedOver}
-      isClone={isClone}
+      isdragging={isDragging}
+      isgroupedover={isGroupedOver}
+      isclone={isClone}
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
@@ -21,7 +21,7 @@ function QuoteItem(props) {
       // data-index={index}
       // aria-label={`${quote.author.name} quote ${quote.content}`}
     >
-      <div>quoteitem</div>
+      <div>{quote.cardTitle}</div>
     </div>
   );
 }

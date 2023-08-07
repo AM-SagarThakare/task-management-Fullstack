@@ -17,7 +17,6 @@ import Logo from "~/images/AM-logo.png";
 // all background images
 
 function SideBar() {
-  console.log("in sidebar ");
 
   const [activeMenu, setActiveMenu] = useState("");
   const [isOpen, setIsOpen] = useState(true);
@@ -29,7 +28,6 @@ function SideBar() {
   useEffect(() => {
     getAllBoards()
       .then((res) => {
-        console.log(res.data);
         
         setBoardArr(res.data);
       })

@@ -9,8 +9,8 @@ const InnerQuoteList = function InnerQuoteList(props) {
         <QuoteItem
           key={quote._id}
           quote={quote}
-          isDragging={dragSnapshot.isDragging}
-          isGroupedOver={Boolean(dragSnapshot.combineTargetFor)}
+          isdragging={dragSnapshot.isDragging.toString()}
+          isgroupedover={Boolean(dragSnapshot.combineTargetFor)}
           provided={dragProvided}
         />
       )}
@@ -54,15 +54,15 @@ export default function QuoteList(props) {
       droppableId={listId}
       type={listType}
       ignoreContainerClipping={ignoreContainerClipping}
-      isDropDisabled={isDropDisabled}
+      isdropdisabled={isDropDisabled}
       isCombineEnabled={isCombineEnabled}
     >
       {(dropProvided, dropSnapshot) => (
         <div
         //   style={style}
-          isDraggingOver={dropSnapshot.isDraggingOver}
-          isDropDisabled={isDropDisabled}
-          isDraggingFrom={Boolean(dropSnapshot.draggingFromThisWith)}
+          isdraggingover={dropSnapshot.isDraggingOver.toString()}
+          isdropdisabled={isDropDisabled}
+          isdraggingfrom={Boolean(dropSnapshot.draggingFromThisWith).toString()}
           {...dropProvided.droppableProps}
         >
           <InnerList
