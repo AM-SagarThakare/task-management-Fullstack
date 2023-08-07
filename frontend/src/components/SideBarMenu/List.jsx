@@ -20,7 +20,7 @@ const InnerQuoteList = function InnerQuoteList(props) {
 
 function InnerList(props) {
   const { quotes, dropProvided } = props;
-//   console.log(props);
+  //   console.log(props);
   const title = props.title ? <div>{props.title}</div> : null;
 
   return (
@@ -59,7 +59,8 @@ export default function QuoteList(props) {
     >
       {(dropProvided, dropSnapshot) => (
         <div
-        //   style={style}
+          //   style={style}
+          
           isdraggingover={dropSnapshot.isDraggingOver.toString()}
           isdropdisabled={isDropDisabled}
           isdraggingfrom={Boolean(dropSnapshot.draggingFromThisWith).toString()}

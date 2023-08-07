@@ -832,7 +832,8 @@ function BoardDetails() {
             <div
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className="d-flex gap-3"
+              className="d-flex border border-3"
+              
             >
               {board?.list.map((list, index) => (
                 <Column
@@ -845,6 +846,7 @@ function BoardDetails() {
                   // useClone={useClone}
                 />
               ))}
+               <div>add new list</div>
             </div>
           )}
         </Droppable>

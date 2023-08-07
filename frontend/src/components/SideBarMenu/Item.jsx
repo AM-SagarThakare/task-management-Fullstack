@@ -21,7 +21,8 @@ function QuoteItem(props) {
       // data-index={index}
       // aria-label={`${quote.author.name} quote ${quote.content}`}
     >
-      <div>{quote.cardTitle}</div>
+      {/* actual card title */}
+      <div className="px-2 py-1 my-2 rounded card-bg-color pointer">{quote.cardTitle}</div>
     </div>
   );
 }
