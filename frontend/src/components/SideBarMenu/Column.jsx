@@ -5,6 +5,7 @@ const Column = (props) => {
   const title = props.title;
   const quotes = props.quotes; // in our case quote is card[]
   const index = props.index;
+
   return (
     <Draggable draggableId={title} index={index}>
       {(provided, snapshot) => (
@@ -29,7 +30,6 @@ const Column = (props) => {
             isCombineEnabled={Boolean(props.isCombineEnabled)}
             useClone={Boolean(props.useClone)}
           />
-          <div>add new card</div>
         </div>
       )}
     </Draggable>
