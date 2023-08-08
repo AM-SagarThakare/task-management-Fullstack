@@ -6,12 +6,12 @@ import { RxCross2 } from "react-icons/rx";
 import { useForm } from "react-hook-form";
 
 const InnerQuoteList = function InnerQuoteList(props) {
-  return props.quotes.map((quote, index) => (
-    <Draggable key={quote._id} draggableId={quote._id} index={index}>
+  return props.cards.map((card, index) => (
+    <Draggable key={card._id} draggableId={card._id} index={index}>
       {(dragProvided, dragSnapshot) => (
         <QuoteItem
-          key={quote._id}
-          quote={quote}
+          key={card._id}
+          quote={card}
           isdragging={dragSnapshot.isDragging.toString()}
           isgroupedover={Boolean(dragSnapshot.combineTargetFor)}
           provided={dragProvided}
@@ -22,7 +22,7 @@ const InnerQuoteList = function InnerQuoteList(props) {
 };
 
 function InnerList(props) {
-  const { quotes, dropProvided } = props;
+  const { cards, dropProvided } = props;
   const [isAddCardVisible, setIsAddCardVisible] = useState(false);
   const [globalIndex, setGlobalIndex] = useState(-1);
   const { register, handleSubmit, reset } = useForm();
@@ -33,7 +33,7 @@ function InnerList(props) {
     <div>
       {title}
       <div ref={dropProvided.innerRef}>
-        <InnerQuoteList quotes={quotes} />
+        <InnerQuoteList cards={cards} />
         {dropProvided.placeholder}
       </div>
       {/* {isAddCardVisible && globalIndex === index ? (
@@ -88,7 +88,7 @@ export default function QuoteList(props) {
     isCombineEnabled,
     listId = "LIST",
     listType,
-    quotes,
+    cards,
     title,
   } = props;
 
@@ -110,7 +110,7 @@ export default function QuoteList(props) {
           {...dropProvided.droppableProps}
         >
           <InnerList
-            quotes={quotes}
+            cards={cards}
             title={title}
             dropProvided={dropProvided}
           />

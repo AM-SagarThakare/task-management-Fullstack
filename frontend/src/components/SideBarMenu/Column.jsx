@@ -3,7 +3,7 @@ import QuoteList from "./List";
 
 const Column = (props) => {
   const title = props.title;
-  const quotes = props.cards; // in our case quote is card[]
+  const cards = props.cards; // in our case quote is card[]
   const index = props.index;
 
   return (
@@ -12,7 +12,6 @@ const Column = (props) => {
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
-          // className="list-bg-color col-6 col-sm-4 col-lg-3 p-3 m-2 rounded border d-flex"
           className="list-bg-color col-6 col-sm-4 col-lg-3 p-3 m-2 rounded"
         >
           <div
@@ -25,7 +24,7 @@ const Column = (props) => {
           <QuoteList
             listId={title}
             listType="QUOTE"
-            quotes={quotes}
+            cards={cards}
             internalScroll={props.isScrollable}
             isCombineEnabled={Boolean(props.isCombineEnabled)}
             useClone={Boolean(props.useClone)}
