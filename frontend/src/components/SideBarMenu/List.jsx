@@ -88,13 +88,9 @@ export default function QuoteList(props) {
     isCombineEnabled,
     listId = "LIST",
     listType,
-    style,
     quotes,
     title,
-    useClone,
   } = props;
-
-  // console.log(props);
 
   return (
     <Droppable

@@ -3,7 +3,7 @@ import QuoteList from "./List";
 
 const Column = (props) => {
   const title = props.title;
-  const quotes = props.quotes; // in our case quote is card[]
+  const quotes = props.cards; // in our case quote is card[]
   const index = props.index;
 
   return (
