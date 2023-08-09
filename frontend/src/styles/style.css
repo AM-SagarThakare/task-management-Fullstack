@@ -16,8 +16,9 @@
   font-size: 14px;
 }
 .opacity-decrease:hover {
-  background-color: rgba(30, 114, 210, 0.9) !important;
-  color: rgb(30, 30, 30);
+  /* background-color: rgba(30, 114, 210, 0.9) !important; */
+  opacity: 0.6;
+  /* color: rgb(30, 30, 30); */
 }
 .modal-content {
   background-color: rgb(35, 35, 35);

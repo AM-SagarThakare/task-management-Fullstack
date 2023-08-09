@@ -1,7 +1,7 @@
 import React from "react";
 
-function QuoteItem(props) {
-  const { quote, isDragging, isGroupedOver, provided, isClone, index } = props;
+function CardItem(props) {
+  const { card, isDragging, isGroupedOver, provided, isClone, index } = props;
 
   return (
     <div
@@ -13,11 +13,11 @@ function QuoteItem(props) {
       {...provided.dragHandleProps}
     >
       {/* actual card title */}
-      <div className="px-2 py-1 my-2 rounded card-bg-color pointer">
-        {quote.cardTitle}
+      <div className="px-2 py-1 my-2 rounded card-bg-color pointer opacity-decrease">
+        {card.cardTitle}
       </div>
     </div>
   );
 }
 
-export default QuoteItem;
+export default CardItem;

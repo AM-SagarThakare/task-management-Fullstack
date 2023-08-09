@@ -20,8 +20,8 @@ import DetailsBgImg from "../../images/photo-1688909987766-8797b4f909b9.jpg";
 import GetCardDetailsModal from "../modals/GetCardDetailsModal";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import Column from "./Column";
 import reorder, { reorderQuoteMap } from "./Reorder";
+import List from "./List";
 
 function BoardDetails() {
   console.log("in board details");
@@ -213,7 +213,7 @@ function BoardDetails() {
               className="d-flex border border-3"
             >
               {board?.list.map((list, index) => (
-                <Column
+                <List
                   key={list.listTitle}
                   index={index}
                   title={list.listTitle}
