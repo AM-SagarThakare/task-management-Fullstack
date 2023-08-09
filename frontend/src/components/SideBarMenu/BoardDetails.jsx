@@ -210,17 +210,49 @@ function BoardDetails() {
             <div
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className="d-flex border border-3"
+              className="d-flex "
             >
               {board?.list.map((list, index) => (
                 <List
-                  key={list.listTitle}
+                  key={list._id}
                   index={index}
                   title={list.listTitle}
                   cards={list.card}
                 />
               ))}
-              <div>add new list</div>
+
+              {!isAddListVisible ? (
+                <div
+                  className=" p-2 col-3 m-3 newlist-bg-color text-light rounded-3 pointer"
+                  style={{ height: "45px" }}
+                  onClick={() => setIsAddListVisible(!isAddListVisible)}
+                >
+                  <span>+ add new list</span>
+                </div>
+              ) : (
+                <form
+                  className="p-2 m-3 text-light list-bg-color rounded-3 pointer col-3 d-flex flex-column align-items-start gap-2 border h-25"
+                  onSubmit={handleSubmit(submitList)}
+                >
+                  <input
+                    className="rounded px-2 text-light w-100"
+                    placeholder="enter list name"
+                    style={{
+                      backgroundColor: "#22272B",
+                      border: "1px solid #85B8FF",
+                    }}
+                    {...register("listTitle", { required: true })}
+                  />
+                  <div className="d-flex align-items-center gap-2">
+                    <button className="btn btn-sm btn-info">Add list </button>
+                    <RxCross2
+                      size={25}
+                      onClick={() => setIsAddListVisible(!isAddListVisible)}
+                    />
+                  </div>
+                </form>
+              )}
+
             </div>
           )}
         </Droppable>

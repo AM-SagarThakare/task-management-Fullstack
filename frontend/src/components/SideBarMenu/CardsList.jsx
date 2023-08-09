@@ -4,45 +4,52 @@ import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { useForm } from "react-hook-form";
 import CardItem from "./CardItem";
+import { addNewCard } from "../../services";
 
 const InnerCardList = function InnerCardList(props) {
-  return props.cards.map((card, index) => (
-    <Draggable key={card._id} draggableId={card._id} index={index}>
-      {(dragProvided, dragSnapshot) => (
-        <CardItem
-          key={card._id}
-          card={card}
-          isdragging={dragSnapshot.isDragging.toString()}
-          isgroupedover={Boolean(dragSnapshot.combineTargetFor)}
-          provided={dragProvided}
-        />
-      )}
-    </Draggable>
-  ));
-};
-
-function InnerCards(props) {
-  const { cards, dropProvided } = props;
-  const [isAddCardVisible, setIsAddCardVisible] = useState(false);
+  const listIndex = props.listIndex;
   const [globalIndex, setGlobalIndex] = useState(-1);
-  const { register, handleSubmit, reset } = useForm();
-  console.log(props);
-  const title = props.title ? <div>{props.title}</div> : null;
-  const submitCard = async (formData, list) => {};
+  const [isAddCardVisible, setIsAddCardVisible] = useState(false);
+  const { register, handleSubmit } = useForm();
+
+  const submitCard = async (formData, list) => {
+    // formData.listID = list.listID;
+
+    // await addNewCard(formData)
+    //   .then(() => {
+    //     board.list[list.listIndex].card.push(formData);
+    //   })
+    //   .catch((err) => console.log(err));
+
+    // setIsAddCardVisible(!isAddCardVisible);
+    // reset({
+    //   cardTitle: "",
+    // });
+  };
+
   return (
-    <div>
-      {title}
-      <div ref={dropProvided.innerRef}>
-        <InnerCardList cards={cards} />
-        {dropProvided.placeholder}
-      </div>
-      {/* {isAddCardVisible && globalIndex === index ? (
+    <>
+      {props.cards.map((card, index) => (
+        <Draggable key={card._id} draggableId={card._id} index={index}>
+          {(dragProvided, dragSnapshot) => (
+            <CardItem
+              key={card._id}
+              card={card}
+              isdragging={dragSnapshot.isDragging.toString()}
+              isgroupedover={Boolean(dragSnapshot.combineTargetFor)}
+              provided={dragProvided}
+            />
+          )}
+        </Draggable>
+      ))}
+
+      {isAddCardVisible && globalIndex === listIndex ? (
         <form
           className="p-2 text-light list-bg-color rounded-3 pointer col-3 d-flex flex-column align-items-start gap-2 end-0 w-100"
           onSubmit={handleSubmit((formData) =>
             submitCard(formData, {
               // listID: "checkkkkkk",
-              listIndex: index,
+              listIndex: listIndex,
             })
           )}
         >
@@ -69,12 +76,27 @@ function InnerCards(props) {
           className="p-2 hoverEffect rounded pointer"
           onClick={() => {
             setIsAddCardVisible(!isAddCardVisible);
-            setGlobalIndex(index);
+            setGlobalIndex(listIndex);
           }}
         >
           + add new card
         </div>
-      )} */}
+      )}
+
+    </>
+  );
+};
+
+function InnerCards(props) {
+  const { cards, dropProvided } = props;
+  const title = props.title ? <div>{props.title}</div> : null;
+  return (
+    <div>
+      {title}
+      <div ref={dropProvided.innerRef}>
+        <InnerCardList cards={cards} />
+        {dropProvided.placeholder}
+      </div>
     </div>
   );
 }
@@ -88,6 +110,7 @@ export default function CardsList(props) {
     listType,
     cards,
     title,
+    listIndex,
   } = props;
 
   return (
@@ -105,8 +128,12 @@ export default function CardsList(props) {
           isdraggingfrom={Boolean(dropSnapshot.draggingFromThisWith).toString()}
           {...dropProvided.droppableProps}
         >
-          <InnerCards cards={cards} title={title} dropProvided={dropProvided} />
-          <div>here</div>
+          <InnerCards
+            cards={cards}
+            title={title}
+            dropProvided={dropProvided}
+            listIndex={listIndex}
+          />
         </div>
       )}
     </Droppable>
