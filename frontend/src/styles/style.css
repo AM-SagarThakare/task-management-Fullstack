@@ -18,6 +18,9 @@
 .opacity-decrease:hover {
   /* background-color: rgba(30, 114, 210, 0.9) !important; */
   opacity: 0.6;
+  border: 1px solid white;
+  box-sizing: border-box;
+  /* padding: 0; */
   /* color: rgb(30, 30, 30); */
 }
 .modal-content {

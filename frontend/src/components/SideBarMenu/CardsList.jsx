@@ -7,12 +7,14 @@ import CardItem from "./CardItem";
 import { addNewCard } from "../../services";
 
 const InnerCardList = function InnerCardList(props) {
+  console.log(props);
+  
   const listIndex = props.listIndex;
   const [globalIndex, setGlobalIndex] = useState(-1);
   const [isAddCardVisible, setIsAddCardVisible] = useState(false);
   const { register, handleSubmit } = useForm();
 
-  const submitCard = async (formData, list) => {
+  const submitCard = async (formData, list) => {  
     // formData.listID = list.listID;
 
     // await addNewCard(formData)

@@ -6,7 +6,7 @@ const List = (props) => {
   const title = props.title;
   const cards = props.cards; // in our case quote is card[]
   const index = props.index;
-
+  const listId = props.listId;
 
   return (
     <Draggable draggableId={title} index={index}>
@@ -23,6 +23,7 @@ const List = (props) => {
           >
             {title}
           </div>
+          {/* show all inner card list */}
           <CardsList
             listId={title}
             listType="QUOTE"

@@ -210,11 +210,12 @@ function BoardDetails() {
             <div
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className="d-flex "
+              className="d-flex align-items-start"
             >
               {board?.list.map((list, index) => (
                 <List
                   key={list._id}
+                  listId={list._id}
                   index={index}
                   title={list.listTitle}
                   cards={list.card}
