@@ -35,6 +35,8 @@ function BoardDetails() {
   const [isAddListVisible, setIsAddListVisible] = useState(false);
   const [isAddCardVisible, setIsAddCardVisible] = useState(false);
 
+  console.log("board.list", board?.list);
+
   const data = useLocation();
 
   const myStyle = {
@@ -64,7 +66,7 @@ function BoardDetails() {
       fetchBoardDetails();
     }
   }, [editStatus, data?.state?.boardID, isAddListVisible]); // if isAddListVisible is true only that time i want to run useffect
-  console.log(board);
+  // console.log(board);
 
   const updateTitle = async (data) => {
     data.boardID = board._id;
@@ -133,7 +135,7 @@ function BoardDetails() {
   const transformedObject = {};
 
   board?.list.forEach((list) => {
-    transformedObject[list.listTitle] = list.card;
+    transformedObject[list._id] = list.card;
   });
 
   const [ordered, setOrdered] = useState(
@@ -178,19 +180,20 @@ function BoardDetails() {
       return;
     }
 
-    console.log(transformedObject);
-
     const data = reorderQuoteMap({
       quoteMap: transformedObject,
       source,
       destination,
     });
-    console.log("data.quoteMap", data.quoteMap);
+
+    console.log("transformedObject", transformedObject);
 
     const updatedBoardList = board?.list.map((item) => {
-      item.card = data.quoteMap[item.listTitle];
+      item.card = data.quoteMap[item._id];
       return item;
     });
+    console.log("updatedBoardList", updatedBoardList);
+
     setBoard((prev) => {
       return { ...prev, list: updatedBoardList };
     });
@@ -253,7 +256,6 @@ function BoardDetails() {
                   </div>
                 </form>
               )}
-
             </div>
           )}
         </Droppable>

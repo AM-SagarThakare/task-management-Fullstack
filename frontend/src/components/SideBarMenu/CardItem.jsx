@@ -2,6 +2,7 @@ import React from "react";
 
 function CardItem(props) {
   const { card, isDragging, isGroupedOver, provided, isClone, index } = props;
+  // console.log(props);
 
   return (
     <div

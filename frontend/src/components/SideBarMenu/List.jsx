@@ -2,7 +2,7 @@ import { Draggable } from "react-beautiful-dnd";
 import CardsList from "./CardsList";
 
 const List = (props) => {
-  console.log(props);
+  // console.log(props);
   const title = props.title;
   const cards = props.cards; // in our case quote is card[]
   const index = props.index;
@@ -25,7 +25,8 @@ const List = (props) => {
           </div>
           {/* show all inner card list */}
           <CardsList
-            listId={title}
+            listId={listId}
+            // listId={title }
             listType="QUOTE"
             cards={cards}
             listIndex={index}

@@ -8,30 +8,28 @@ import { addNewCard } from "../../services";
 
 const InnerCardList = function InnerCardList(props) {
   console.log(props);
-  
+
   const listIndex = props.listIndex;
   const [globalIndex, setGlobalIndex] = useState(-1);
   const [isAddCardVisible, setIsAddCardVisible] = useState(false);
   const { register, handleSubmit } = useForm();
 
-  const submitCard = async (formData, list) => {  
+  const submitCard = async (formData, list) => {
     // formData.listID = list.listID;
-
     // await addNewCard(formData)
     //   .then(() => {
     //     board.list[list.listIndex].card.push(formData);
     //   })
     //   .catch((err) => console.log(err));
-
     // setIsAddCardVisible(!isAddCardVisible);
     // reset({
     //   cardTitle: "",
     // });
   };
-
+ 
   return (
     <>
-      {props.cards.map((card, index) => (
+      {props?.cards.map((card, index) => (
         <Draggable key={card._id} draggableId={card._id} index={index}>
           {(dragProvided, dragSnapshot) => (
             <CardItem
@@ -84,12 +82,13 @@ const InnerCardList = function InnerCardList(props) {
           + add new card
         </div>
       )}
-
     </>
   );
 };
 
 function InnerCards(props) {
+  // console.log("innerCardList", props);
+
   const { cards, dropProvided } = props;
   const title = props.title ? <div>{props.title}</div> : null;
   return (
@@ -114,6 +113,8 @@ export default function CardsList(props) {
     title,
     listIndex,
   } = props;
+
+  console.log("cardList props", props);
 
   return (
     <Droppable
