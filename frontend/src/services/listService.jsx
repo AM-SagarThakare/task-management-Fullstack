@@ -8,7 +8,8 @@ const deleteListByID = (listID) => {
   return service.delete(`/user/board/list/${listID}`);
 };
 
-const updateList = (payload, listID) => {
+const updateList = (listID, payload) => {
   return service.patch(`/user/board/list/${listID}`, payload);
 };
+
 export { addNewList, deleteListByID, updateList };

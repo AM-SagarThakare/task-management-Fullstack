@@ -4,6 +4,7 @@ export {
   getBoardDetailsByID,
   updateBoardTitle,
   deleteBoardByID,
+  updateBoard 
 } from "./boardService";
 
 export { getToken, setToken, deleteToken } from "./localStorageService";

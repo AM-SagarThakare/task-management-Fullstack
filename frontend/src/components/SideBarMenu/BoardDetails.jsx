@@ -1,10 +1,12 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {
   addNewCard,
   addNewList,
   deleteListByID,
   getBoardDetailsByID,
+  updateBoard,
+  updateBoardList,
   updateBoardTitle,
   updateList,
 } from "../../services";
@@ -19,7 +21,7 @@ import { toast } from "react-toastify";
 import DetailsBgImg from "../../images/photo-1688909987766-8797b4f909b9.jpg";
 import GetCardDetailsModal from "../modals/GetCardDetailsModal";
 
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import reorder, { reorderQuoteMap } from "./Reorder";
 import List from "./List";
 
@@ -35,7 +37,7 @@ function BoardDetails() {
   const [isAddListVisible, setIsAddListVisible] = useState(false);
   const [isAddCardVisible, setIsAddCardVisible] = useState(false);
 
-  console.log("board.list", board?.list);
+  console.log("board.list", board);
 
   const data = useLocation();
 
@@ -66,7 +68,6 @@ function BoardDetails() {
       fetchBoardDetails();
     }
   }, [editStatus, data?.state?.boardID, isAddListVisible]); // if isAddListVisible is true only that time i want to run useffect
-  // console.log(board);
 
   const updateTitle = async (data) => {
     data.boardID = board._id;
@@ -174,8 +175,13 @@ function BoardDetails() {
         return board.list.find((list) => list.listTitle === listTitle);
       });
 
-      board.list = orderedList;
+      board.list = orderedList; 
+      console.log("orderedList", orderedList);
       setBoard(board);
+
+      const boardListArr = orderedList.map((item) => item._id);
+
+      updateBoard(board._id, { list: boardListArr, boardID: board._id });
 
       return;
     }
@@ -186,16 +192,36 @@ function BoardDetails() {
       destination,
     });
 
-    console.log("transformedObject", transformedObject);
-
     const updatedBoardList = board?.list.map((item) => {
       item.card = data.quoteMap[item._id];
       return item;
     });
-    console.log("updatedBoardList", updatedBoardList);
 
     setBoard((prev) => {
       return { ...prev, list: updatedBoardList };
+    });
+
+    const listIdsToUpdate = [
+      result.destination.droppableId,
+      result.source.droppableId,
+    ];
+    console.log(listIdsToUpdate);
+    const newCardIDsArray = [];
+
+    for (const list of board.list) {
+      if (listIdsToUpdate.includes(list._id)) {
+        newCardIDsArray.push(list.card.map((item) => item._id));
+      }
+    }
+
+    updateListIDs(listIdsToUpdate, newCardIDsArray);
+  };
+
+  const updateListIDs = (listIdsToUpdate, newCardIDsArray) => {
+
+    listIdsToUpdate.forEach((listId, index) => {
+      const payload = { card: newCardIDsArray[index] };
+      updateList(listId, payload);
     });
   };
 

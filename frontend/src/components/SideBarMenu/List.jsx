@@ -2,7 +2,6 @@ import { Draggable } from "react-beautiful-dnd";
 import CardsList from "./CardsList";
 
 const List = (props) => {
-  // console.log(props);
   const title = props.title;
   const cards = props.cards; // in our case quote is card[]
   const index = props.index;
@@ -14,7 +13,7 @@ const List = (props) => {
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
-          className="list-bg-color col-6 col-sm-4 col-lg-3 p-3 m-2 rounded"
+          className="list-bg-color col-6 col-sm-4 col-lg-2 p-3 m-2 rounded"
         >
           <div
             isdragging={snapshot.isDragging.toString()}

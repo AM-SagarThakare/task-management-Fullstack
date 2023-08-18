@@ -7,7 +7,6 @@ import CardItem from "./CardItem";
 import { addNewCard } from "../../services";
 
 const InnerCardList = function InnerCardList(props) {
-  console.log(props);
 
   const listIndex = props.listIndex;
   const [globalIndex, setGlobalIndex] = useState(-1);
@@ -87,7 +86,6 @@ const InnerCardList = function InnerCardList(props) {
 };
 
 function InnerCards(props) {
-  // console.log("innerCardList", props);
 
   const { cards, dropProvided } = props;
   const title = props.title ? <div>{props.title}</div> : null;
@@ -113,8 +111,6 @@ export default function CardsList(props) {
     title,
     listIndex,
   } = props;
-
-  console.log("cardList props", props);
 
   return (
     <Droppable

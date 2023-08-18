@@ -12,12 +12,10 @@ const getBoardDetailsByID = async (boardID) => {
     console.log(err.message);
   }
 };
-const updateBoard = async (payload) => {
+const updateBoard = async (boardID, payload) => {
   console.log("in board service");
-  return await boardCollection.updateOne(
-    { _id: payload.boardID },
-    { $set: payload }
-  );
+  
+  return await boardCollection.updateOne({ _id: boardID }, { $set: payload });
 };
 const deleteBoard = async (boardID) => {
   return await boardCollection.deleteOne({ _id: boardID });

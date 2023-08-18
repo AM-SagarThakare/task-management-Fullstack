@@ -50,7 +50,9 @@ const updateBoard = async (req, res) => {
     return res.status(400).send({ message: error.message });
   }
 
-  return res.status(200).send(await boardService.updateBoard(value));
+  return res
+    .status(200)
+    .send(await boardService.updateBoard(req.params.boardID, value));
 };
 
 const deleteBoard = async (req, res) => {

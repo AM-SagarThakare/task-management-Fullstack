@@ -1,8 +1,6 @@
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
-  // console.log('list',list);
   const result = Array.from(list);
-  // console.log('reorder     end');
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
 
@@ -10,25 +8,10 @@ const reorder = (list, startIndex, endIndex) => {
 };
 
 export const reorderQuoteMap = ({ quoteMap, source, destination }) => {
-  // console.log('in reorderQuoteMap');
-  // console.log(
-  //   "QuoteMap",
-  //   quoteMap,
-  //   "\nsource",
-  //   source,
-  //   "\ndestination",
-  //   destination
-  // );
 
   const current = [...quoteMap[source.droppableId]];
   const next = [...quoteMap[destination.droppableId]];
   const target = current[source.index];
-  // console.log("current", current);
-  // console.log("next", next);
-  // console.log("target", target);
-
-  // console.log(source.droppableId);
-  // console.log(destination.droppableId);
 
   // moving to same list
   if (source.droppableId === destination.droppableId) {
@@ -54,7 +37,6 @@ export const reorderQuoteMap = ({ quoteMap, source, destination }) => {
     [source.droppableId]: current,
     [destination.droppableId]: next,
   };
-  console.log("result", result);
 
   return {
     quoteMap: result,
