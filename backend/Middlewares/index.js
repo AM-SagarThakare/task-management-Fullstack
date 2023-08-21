@@ -1,4 +1,5 @@
 module.exports = {
     verify : require('./verifyToken'),
-    validate : require('./validate')    
+    validate : require('./validate'),
+    multer : require('./uploadImage')
 }

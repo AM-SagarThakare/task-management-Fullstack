@@ -13,8 +13,6 @@ const getBoardDetailsByID = async (boardID) => {
   }
 };
 const updateBoard = async (boardID, payload) => {
-  console.log("in board service");
-  
   return await boardCollection.updateOne({ _id: boardID }, { $set: payload });
 };
 const deleteBoard = async (boardID) => {

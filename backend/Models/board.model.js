@@ -7,6 +7,7 @@ const addNewBoardSchema = mongoose.Schema(
       ref: "user",
     },
     boardTitle: String,
+    bgImg_path: String,
     list: [
       {
         type: mongoose.Schema.Types.ObjectId,

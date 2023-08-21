@@ -7,7 +7,6 @@ import CardItem from "./CardItem";
 import { addNewCard } from "../../services";
 
 const InnerCardList = function InnerCardList(props) {
-
   const listIndex = props.listIndex;
   const [globalIndex, setGlobalIndex] = useState(-1);
   const [isAddCardVisible, setIsAddCardVisible] = useState(false);
@@ -25,7 +24,7 @@ const InnerCardList = function InnerCardList(props) {
     //   cardTitle: "",
     // });
   };
- 
+
   return (
     <>
       {props?.cards.map((card, index) => (
@@ -86,7 +85,6 @@ const InnerCardList = function InnerCardList(props) {
 };
 
 function InnerCards(props) {
-
   const { cards, dropProvided } = props;
   const title = props.title ? <div>{props.title}</div> : null;
   return (

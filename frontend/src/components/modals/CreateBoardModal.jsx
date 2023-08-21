@@ -39,10 +39,14 @@ function CreateBoardModal({ boardStatus, setBoardStatus, setBoardArr }) {
   };
 
   const submit = (formdata) => {
-    
+    console.log(formdata)
+    let payload = new FormData();
+    payload.append("boardTitle", formdata.boardTitle);
+    payload.append("image", formdata.image[0]);
+
     // console.log(formdata);
     if (Object.keys(errors).length === 0) {
-      addNewBoard(formdata)
+      addNewBoard(payload)
         .then((res) => toast.success(res.data.message))
         .catch(() => {});
       setBoardStatus(!boardStatus);
@@ -79,6 +83,13 @@ function CreateBoardModal({ boardStatus, setBoardStatus, setBoardArr }) {
               </p>
               <div className="row ">
                 <p>Select Background </p>
+                <div className="pb-2">
+                  <input
+                    type="file"
+                    className="bg-transparent"
+                    {...register("image", { required: true })}
+                  />
+                </div>
                 {images.map((fileName, index) => {
                   const imgUrl = require(`~/images/bg-image/${fileName}`);
                   return (
