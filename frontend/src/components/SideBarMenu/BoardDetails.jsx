@@ -37,8 +37,6 @@ function BoardDetails() {
   const [isAddListVisible, setIsAddListVisible] = useState(false);
   const [isAddCardVisible, setIsAddCardVisible] = useState(false);
 
-  console.log("board.list", board);
-
   const data = useLocation();
 
   const myStyle = {
@@ -175,8 +173,7 @@ function BoardDetails() {
         return board.list.find((list) => list.listTitle === listTitle);
       });
 
-      board.list = orderedList; 
-      console.log("orderedList", orderedList);
+      board.list = orderedList;
       setBoard(board);
 
       const boardListArr = orderedList.map((item) => item._id);
@@ -201,11 +198,21 @@ function BoardDetails() {
       return { ...prev, list: updatedBoardList };
     });
 
-    const listIdsToUpdate = [
+    var listIdsToUpdate = [
       result.destination.droppableId,
       result.source.droppableId,
     ];
-    console.log(listIdsToUpdate);
+
+    const indexes = listIdsToUpdate.map((listId) => {
+      return board.list.findIndex((list) => list._id === listId);
+    });
+
+    if (indexes[0] > indexes[1]) {
+      listIdsToUpdate = [
+        result.source.droppableId,
+        result.destination.droppableId,
+      ];
+    }
     const newCardIDsArray = [];
 
     for (const list of board.list) {
@@ -218,7 +225,6 @@ function BoardDetails() {
   };
 
   const updateListIDs = (listIdsToUpdate, newCardIDsArray) => {
-
     listIdsToUpdate.forEach((listId, index) => {
       const payload = { card: newCardIDsArray[index] };
       updateList(listId, payload);
