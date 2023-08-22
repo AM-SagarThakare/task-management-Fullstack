@@ -12,10 +12,6 @@ app.use(cors());
 
 app.use("/upload", express.static("upload"));
 
-app.get("/", (req, res) => {
-  res.send("sagar");
-});
-
 // routes
 app.use("/", routes); //  routes
 

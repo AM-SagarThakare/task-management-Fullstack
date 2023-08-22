@@ -38,7 +38,6 @@ function BoardDetails() {
   const [isAddCardVisible, setIsAddCardVisible] = useState(false);
 
   const data = useLocation();
-  console.log(board?.bgImg_path);
 
   const myStyle = {
     backgroundImage: `url(http://localhost:5000/${board?.bgImg_path})`,

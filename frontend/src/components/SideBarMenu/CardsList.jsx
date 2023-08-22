@@ -13,7 +13,8 @@ const InnerCardList = function InnerCardList(props) {
   const { register, handleSubmit } = useForm();
 
   const submitCard = async (formData, list) => {
-    // formData.listID = list.listID;
+    console.log(formData);
+    formData.listID = list.listID;
     // await addNewCard(formData)
     //   .then(() => {
     //     board.list[list.listIndex].card.push(formData);
