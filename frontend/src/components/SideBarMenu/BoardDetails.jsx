@@ -254,6 +254,7 @@ function BoardDetails() {
                   index={index}
                   title={list.listTitle}
                   cards={list.card}
+                  board={board}
                 />
               ))}
 

@@ -4,6 +4,7 @@ const { boardService } = require("../Services");
 const { boardValidation } = require("../Validations");
 
 const addNewBoard = async (req, res) => {
+  console.log(req.file);
   req.body.bgImg_path = req.file.path;
   const { error, value } = validate.validateJoiSchema(
     boardValidation.addNewBoard

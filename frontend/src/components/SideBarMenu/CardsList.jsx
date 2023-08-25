@@ -7,23 +7,26 @@ import CardItem from "./CardItem";
 import { addNewCard } from "../../services";
 
 const InnerCardList = function InnerCardList(props) {
+  console.log(props);
+
   const listIndex = props.listIndex;
   const [globalIndex, setGlobalIndex] = useState(-1);
   const [isAddCardVisible, setIsAddCardVisible] = useState(false);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const submitCard = async (formData, list) => {
-    console.log(formData);
+    
     formData.listID = list.listID;
-    // await addNewCard(formData)
-    //   .then(() => {
-    //     board.list[list.listIndex].card.push(formData);
-    //   })
-    //   .catch((err) => console.log(err));
-    // setIsAddCardVisible(!isAddCardVisible);
-    // reset({
-    //   cardTitle: "",
-    // });
+    await addNewCard(formData)
+      .then(() => {
+        console.log(props.board);
+        props.board.list[list.listIndex].card.push(formData);
+      })
+      .catch((err) => console.log(err));
+    setIsAddCardVisible(!isAddCardVisible);
+    reset({
+      cardTitle: "",
+    });
   };
 
   return (
@@ -47,7 +50,7 @@ const InnerCardList = function InnerCardList(props) {
           className="p-2 text-light list-bg-color rounded-3 pointer col-3 d-flex flex-column align-items-start gap-2 end-0 w-100"
           onSubmit={handleSubmit((formData) =>
             submitCard(formData, {
-              // listID: "checkkkkkk",
+              listID: props.listId,
               listIndex: listIndex,
             })
           )}
@@ -92,7 +95,11 @@ function InnerCards(props) {
     <div>
       {title}
       <div ref={dropProvided.innerRef}>
-        <InnerCardList cards={cards} />
+        <InnerCardList
+          cards={cards}
+          listId={props.listId}
+          board={props.board}
+        />
         {dropProvided.placeholder}
       </div>
     </div>
@@ -131,6 +138,8 @@ export default function CardsList(props) {
             title={title}
             dropProvided={dropProvided}
             listIndex={listIndex}
+            listId={props.listId}
+            board={props.board}
           />
         </div>
       )}

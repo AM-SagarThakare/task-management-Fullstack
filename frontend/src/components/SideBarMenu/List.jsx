@@ -32,6 +32,8 @@ const List = (props) => {
             internalScroll={props.isScrollable}
             isCombineEnabled={Boolean(props.isCombineEnabled)}
             useClone={Boolean(props.useClone)}
+            board={props.board}
+
           />
         </div>
       )}

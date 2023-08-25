@@ -8,7 +8,7 @@ import { useState } from "react";
 import { IoMdDoneAll } from "react-icons/io";
 
 function CreateBoardModal({ boardStatus, setBoardStatus, setBoardArr }) {
-  const [imgIndex, setImgIndex] = useState(0);
+  const [imgIndex, setImgIndex] = useState(-1);
 
   const images = [
     "bg-img1.jpeg",
@@ -38,11 +38,31 @@ function CreateBoardModal({ boardStatus, setBoardStatus, setBoardArr }) {
     });
   };
 
-  const submit = (formdata) => {
-    console.log(formdata)
+  const submit = async (formdata) => {
     let payload = new FormData();
+    console.log(formdata);
     payload.append("boardTitle", formdata.boardTitle);
-    payload.append("image", formdata.image[0]);
+
+    // if user select image that provided by frontend
+    if (imgIndex !== -1) {
+
+      try{
+        const imgUrl = require(`~/images/bg-image/${images[imgIndex]}`);
+        const response = await fetch(imgUrl);
+        const imageBlob = await response.blob();
+        
+        payload.append("image", imageBlob);
+        console.log('inn trycatch');
+
+      // console.log('Image uploaded:', uploadResponse.data);
+    }catch(error){
+      console.error('Error uploading image:', error);
+    }
+
+    } else {
+      // if user select image from files
+      payload.append("image", formdata.image[0]);
+    }
 
     // console.log(formdata);
     if (Object.keys(errors).length === 0) {
@@ -87,11 +107,12 @@ function CreateBoardModal({ boardStatus, setBoardStatus, setBoardArr }) {
                   <input
                     type="file"
                     className="bg-transparent"
-                    {...register("image", { required: true })}
+                    {...register("image")}
                   />
                 </div>
                 {images.map((fileName, index) => {
                   const imgUrl = require(`~/images/bg-image/${fileName}`);
+                  // console.log('------',imgUrl);
                   return (
                     <div
                       className="position-relative col-3 d-flex align-items-center justify-content-center "

@@ -12,7 +12,7 @@ import { BiBarChartAlt2 } from "react-icons/bi";
 import { FiChevronsRight, FiChevronsLeft } from "react-icons/fi";
 import { BsFillClipboard2DataFill } from "react-icons/bs";
 import { MdOutlineDeleteForever } from "react-icons/md";
-import Logo from "~/images/AM-logo.png";
+import Logo from "~/images/sagarThakare-logo.png";
 
 // all background images
 
@@ -90,12 +90,13 @@ function SideBar() {
 
     return (
       <div
-        className="d-flex  my-1 justify-content-between p-2 hoverEffect align-items-center"
+        className="d-flex  my-1 justify-content-between p-2 hoverEffect align-items-center pointer"
+        onClick={() => openBoardDetails(i)}
         key={i}
       >
         <div
           className="d-flex gap-2 pointer align-items-center"
-          onClick={() => openBoardDetails(i)}
+          
         >
           <BsFillClipboard2DataFill size={20} />
           <p className="m-0">{board.boardTitle}</p>
@@ -120,7 +121,7 @@ function SideBar() {
           style={{ width: isOpen ? "300px" : "10px" }}
         >
           <div className=" p-2 d-flex gap-2 align-items-center">
-            <img src={Logo} height="35px" alt="" />
+            <img src={Logo} height="50px" alt="" />
             <h5 className="m-0"> Workspace</h5>
           </div>
 
