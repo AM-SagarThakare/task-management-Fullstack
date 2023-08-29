@@ -7,7 +7,7 @@ import CardItem from "./CardItem";
 import { addNewCard } from "../../services";
 
 const InnerCardList = function InnerCardList(props) {
-  console.log(props);
+  // console.log(props);
 
   const listIndex = props.listIndex;
   const [globalIndex, setGlobalIndex] = useState(-1);

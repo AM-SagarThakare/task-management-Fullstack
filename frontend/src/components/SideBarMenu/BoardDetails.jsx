@@ -260,7 +260,7 @@ function BoardDetails() {
 
               {!isAddListVisible ? (
                 <div
-                  className=" p-2 col-3 m-3 newlist-bg-color text-light rounded-3 pointer"
+                  className=" p-2 col-2 m-3 newlist-bg-color text-light rounded-3 pointer"
                   style={{ height: "45px" }}
                   onClick={() => setIsAddListVisible(!isAddListVisible)}
                 >
@@ -268,7 +268,7 @@ function BoardDetails() {
                 </div>
               ) : (
                 <form
-                  className="p-2 m-3 text-light list-bg-color rounded-3 pointer col-3 d-flex flex-column align-items-start gap-2 border h-25"
+                  className="p-2 m-3 text-light list-bg-color rounded-3 pointer col-2 d-flex flex-column align-items-start gap-2 border h-25"
                   onSubmit={handleSubmit(submitList)}
                 >
                   <input
@@ -301,8 +301,9 @@ function BoardDetails() {
       <div className="h-100" style={myStyle}>
         {/* board title  */}
         <div
-          className=" py-2 ps-4 text-light"
-          style={{ backgroundColor: "rgba(20, 20, 20,0.1)" }}
+          className=" py-2 ps-4 text-light "
+          // style={{ backgroundColor: "rgba(20, 20, 20,0.1)" }}
+          style={{ background: "linear-gradient(transparent,#2e2e2e)" }}
         >
           {editStatus ? (
             <form
@@ -321,7 +322,7 @@ function BoardDetails() {
               </button>
             </form>
           ) : (
-            <div className="d-flex gap-3 align-items-center text-light">
+            <div className="d-flex gap-3 align-items-center text-light ">
               <h2 className=" "> {board?.boardTitle}</h2>
               <GrEdit
                 size={23}
