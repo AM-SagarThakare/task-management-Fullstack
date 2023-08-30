@@ -3,15 +3,14 @@ import "~/styles/style.css";
 //dependencies
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
-// react-icons
-import { AiFillProject } from "react-icons/ai";
+
 // images
 import boardImg from "~/images/board-init-img.svg";
 // folders
 import { CreateBoardModal } from "../";
 import { getAllBoards } from "~/services";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import movableIcon from '~/images/movable-icon.svg'
+import movableIcon from "~/images/movable-icon.svg";
 
 export default function Board() {
   console.log("in board ");
@@ -61,14 +60,19 @@ export default function Board() {
     };
 
     return boardArr?.map((board, ind) => {
+      console.log(board.bgImg_path);
       return (
-        <div className="col-6 col-sm-4 col-lg-2 mb-2 text-break  " key={ind}>
+        <div className="col-6 col-sm-4 col-lg-2 mb-2 text-break" key={ind}>
           <div
-            style={{ height: "100px", backgroundColor: `#034d82` }}
+            style={{
+              height: "100px",
+              backgroundImage: `url(http://localhost:5000/${board?.bgImg_path})`,
+              backgroundSize: "100% 100%",
+            }}
             className="rounded p-2 opacity-decrease pointer"
             onClick={() => openBoardDetails(ind)}
           >
-            {board.boardTitle}
+            <span className=" text-shadow">{board.boardTitle}</span>
           </div>
         </div>
       );
@@ -81,7 +85,7 @@ export default function Board() {
         <div className="p-3 ">
           <div className="d-flex py-3 gap-2 ">
             {/* <AiFillProject size={30} /> */}
-            <img src={movableIcon} height={30} alt='' />
+            <img src={movableIcon} height={30} alt="" />
             <h4>
               <u>Your Boards</u>
             </h4>

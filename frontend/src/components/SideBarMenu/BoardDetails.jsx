@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {
-  addNewCard,
   addNewList,
-  deleteListByID,
   getBoardDetailsByID,
   updateBoard,
-  updateBoardList,
   updateBoardTitle,
   updateList,
 } from "../../services";
 import { GrEdit } from "react-icons/gr";
 import { RxCross2 } from "react-icons/rx";
-import { PiDotsThreeOutlineThin } from "react-icons/pi";
-import { MdOutlineModeEditOutline } from "react-icons/md";
 import "~/styles/style.css";
 import "./BoardDetails.css";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import DetailsBgImg from "../../images/photo-1688909987766-8797b4f909b9.jpg";
 import GetCardDetailsModal from "../modals/GetCardDetailsModal";
 
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
@@ -33,9 +27,7 @@ function BoardDetails() {
   const [show, setShow] = useState(false);
   const [board, setBoard] = useState(null);
   const [editStatus, setEditStatus] = useState(false);
-  const [listEditStatus, setlistEditStatus] = useState(false);
   const [isAddListVisible, setIsAddListVisible] = useState(false);
-  const [isAddCardVisible, setIsAddCardVisible] = useState(false);
 
   const data = useLocation();
 
@@ -78,38 +70,6 @@ function BoardDetails() {
         .catch(() => {});
     }
     setEditStatus(!editStatus);
-  };
-
-  const submitCard = async (formData, list) => {
-    formData.listID = list.listID;
-
-    await addNewCard(formData)
-      .then(() => {
-        board.list[list.listIndex].card.push(formData);
-      })
-      .catch(() => {});
-
-    setIsAddCardVisible(!isAddCardVisible);
-    reset({
-      cardTitle: "",
-    });
-  };
-
-  const deleteList = (listID) => {
-    deleteListByID(listID)
-      .then(() => {
-        board.list = board.list.filter((list) => list._id !== listID);
-        setBoard((prev) => ({ ...prev, board }));
-      })
-      .catch(() => {});
-  };
-
-  const submitListTitle = async (formData, list) => {
-    await updateList(formData, list.listID)
-      .then((res) => {})
-      .catch(() => {});
-
-    setlistEditStatus(!listEditStatus);
   };
 
   /* ----------------------------------------------------------------------------------------------------------------------------- */
