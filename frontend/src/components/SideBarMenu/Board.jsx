@@ -126,6 +126,6 @@ export default function Board() {
         setBoardStatus={setBoardStatus}
         setBoardArr={setBoardArr}
       />
-    </React.Fragment>
+    </React.Fragment> 
   );
 }

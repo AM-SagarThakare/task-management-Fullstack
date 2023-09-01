@@ -19,6 +19,7 @@
   color: white !important;
   box-sizing: border-box;
   transform: scale(1.05);;
+  text-shadow: 2px 2px 1px black;
 }
 .modal-content {
   background-color: rgb(35, 35, 35);

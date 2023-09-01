@@ -228,7 +228,7 @@ function BoardDetails() {
                 </div>
               ) : (
                 <form
-                  className="p-2 m-3 text-light list-bg-color rounded-3 pointer col-2 d-flex flex-column align-items-start gap-2 border h-25"
+                  className="p-2 m-3 text-light list-bg-color rounded-3 pointer col-2 d-flex flex-column align-items-start gap-2 h-25"
                   onSubmit={handleSubmit(submitList)}
                 >
                   <input
